@@ -38,7 +38,7 @@ const { data: videos } = useGetVideos();
       </UDashboardToolbar>
 
       <UDashboardPanelContent>
-<VideosList :data="videos" />
+        <VideosList :data="videos" />
       </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>
