@@ -1,9 +1,9 @@
 const cloudinary = require("cloudinary").v2;
 
 cloudinary.config({
-  cloud_name: "dwfcofnrd",
-  api_key: "616751826717264",
-  api_secret: "j9j8BANHui4FQiBSbJJE_a0_jjk",
+cloud_name: process.env.CLOUDINARY_CLOUD_NAME || "dwfcofnrd",
+api_key: process.env.CLOUDINARY_API_KEY,
+api_secret: process.env.CLOUDINARY_API_SECRET,
 });
 
 async function uploadSubtitle() {
