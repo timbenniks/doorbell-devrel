@@ -11,8 +11,10 @@ export default defineNuxtConfig({
     '@nuxt/image'
   ],
 
+  ssr: false,
+
   routeRules: {
-    "/vidoes": {
+    "/videos": {
       redirect: {
         to: "/",
         statusCode: 308,

@@ -25,7 +25,7 @@ export function useVideoById(videoId: string) {
     return entry
   }
 
-  const { data, pending, error, refresh } = useAsyncData('videos', getVideos)
+  const { data, status, error, refresh } = useAsyncData('videos', getVideos)
 
-  return { data, pending, error, refresh }
+  return { data, status, error, refresh }
 }

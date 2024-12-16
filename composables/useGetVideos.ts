@@ -52,7 +52,7 @@ export function useGetVideos() {
     return result.entries
   }
 
-  const { data, pending, error, refresh } = useAsyncData('videos', getVideos)
+  const { data, status, error, refresh } = useAsyncData('videos', getVideos)
 
-  return { data, pending, error, refresh }
+  return { data, status, error, refresh }
 }

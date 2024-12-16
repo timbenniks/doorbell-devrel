@@ -1,7 +1,5 @@
 import type { EnhancedVideo, VideoList, Video, VideoDetail } from '../types'
 
-import { useAsyncData } from '#app'
-
 export function useProcessingVideos({ limit = 2 }: { limit?: number } = {}) {
   const headers = {
     'accept': 'application/json',
@@ -27,10 +25,10 @@ export function useProcessingVideos({ limit = 2 }: { limit?: number } = {}) {
     return enhancedVideos.filter(video => video.data.status === 'processing' || video.data.status === 'pending')
   }
 
-  const { data, pending, error, refresh } = useAsyncData<EnhancedVideo[]>(
+  const { data, status, error, refresh } = useAsyncData<EnhancedVideo[]>(
     'enhancedVideoList',
     fetchEnhancedVideos
   )
 
-  return { data, pending, error, refresh }
+  return { data, status, error, refresh }
 }
