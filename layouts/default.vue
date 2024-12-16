@@ -7,7 +7,6 @@ const links = [
     label: "Videos",
     icon: "i-heroicons-play",
     to: "/",
-    badge: "4",
   },
   {
     id: "settings",
@@ -77,7 +76,6 @@ const groups = [
     <slot />
 
     <HelpSlideover />
-    <NotificationsSlideover />
 
     <ClientOnly>
       <LazyUDashboardSearch :groups="groups" />

@@ -17,9 +17,8 @@ useHead({
   },
 });
 
-const title = "Nuxt UI Pro - Dashboard template";
-const description =
-  "Nuxt UI Pro is a collection of premium Vue components built on top of Nuxt UI to create beautiful & responsive Nuxt applications in minutes.";
+const title = "Doorbell DevRel";
+const description = "Doorbell DevRel Dashboard";
 
 useSeoMeta({
   title,

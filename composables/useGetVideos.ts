@@ -25,22 +25,29 @@ export function useGetVideos() {
         "intro",
         "background_noise",
         "animated_poster.url",
+        "animated_poster.uid",
+        "animated_poster.filename",
         "animated_poster.title",
         "poster.url",
+        "poster.uid",
+        "poster.filename",
         "poster.title",
         "video.url",
+        "video.uid",
+        "video.filename",
         "video.title"
       ])
+      .includeCount()
       .find();
 
-    // if ($preview) {
-    //   result.entries?.forEach(entry => {
-    //     if (entry) {
-    //       //@ts-ignore
-    //       contentstack.Utils.addEditableTags(entry, 'video', true)
-    //     }
-    //   })
-    // }
+    if ($preview) {
+      result.entries?.forEach(entry => {
+        if (entry) {
+          //@ts-ignore
+          contentstack.Utils.addEditableTags(entry, 'video', true)
+        }
+      })
+    }
 
     return result.entries
   }

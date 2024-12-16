@@ -11,6 +11,15 @@ export default defineNuxtConfig({
     '@nuxt/image'
   ],
 
+  routeRules: {
+    "/vidoes": {
+      redirect: {
+        to: "/",
+        statusCode: 308,
+      },
+    },
+  },
+
   fonts: {
     defaults: {
       weights: [400, 700, 900],
@@ -30,10 +39,25 @@ export default defineNuxtConfig({
       environment: process.env.NUXT_CONTENTSTACK_ENVIRONMENT,
       preview: process.env.NUXT_CONTENTSTACK_PREVIEW === "true",
       region: process.env.NUXT_CONTENTSTACK_REGION,
+      assetHost: 'eu-assets.contentstack.com/v3/assets'
     },
   },
 
   ui: {
     global: true
+  },
+
+
+  image: {
+    providers: {
+      contentstack: {
+        name: "contentstack",
+        provider: "~/providers/contentstack",
+        options: {
+          baseURL: 'https://eu-assets.contentstack.com/v3/assets',
+          apiKey: process.env.NUXT_CONTENTSTACK_API_KEY
+        }
+      },
+    }
   }
 })

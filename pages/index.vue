@@ -4,7 +4,8 @@ const items = [
     {
       label: "New Video",
       icon: "i-heroicons-play",
-      to: "/new-video",
+      to: "https://app.heygen.com/create-v3/draft?vt=p",
+      target: "_blank",
     },
   ],
 ];
@@ -13,13 +14,24 @@ definePageMeta({
   middleware: "auth",
 });
 
-const { data: videos } = useGetVideos();
+const { data: videos, refresh: refreshVideos } = useGetVideos();
+const { data: processing, refresh: refreshProcessing } = useProcessingVideos({
+  limit: 2,
+});
+const listRefreshing = ref(false);
+
+async function refreshList() {
+  listRefreshing.value = true;
+  await refreshVideos();
+  await refreshProcessing();
+  listRefreshing.value = false;
+}
 </script>
 
 <template>
   <UDashboardPage>
     <UDashboardPanel grow>
-      <UDashboardNavbar title="Videos" badge="4">
+      <UDashboardNavbar title="Videos">
         <template #right>
           <UDropdown :items="items">
             <UButton
@@ -33,12 +45,26 @@ const { data: videos } = useGetVideos();
 
       <UDashboardToolbar>
         <template #left>
-          <p>toolbar</p>
+          <UButton
+            :loading="listRefreshing"
+            icon="i-heroicons-arrow-path-20-solid"
+            size="md"
+            @click="refreshList()"
+          >
+            Refresh list
+          </UButton>
+          <UButton
+            icon="i-heroicons-play"
+            size="md"
+            to="https://app.heygen.com/create-v3/draft?vt=p"
+            target="_blank"
+            >New Video</UButton
+          >
         </template>
       </UDashboardToolbar>
 
       <UDashboardPanelContent>
-        <VideosList :data="videos" />
+        <VideosList :processing="processing && processing[0]" :data="videos" />
       </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>

@@ -2,7 +2,7 @@ import type { EnhancedVideo, VideoList, Video, VideoDetail } from '../types'
 
 import { useAsyncData } from '#app'
 
-export function useEnhancedVideoList({ limit = 10 }: { limit?: number } = {}) {
+export function useProcessingVideos({ limit = 2 }: { limit?: number } = {}) {
   const headers = {
     'accept': 'application/json',
     'x-api-key': 'YjkyNDU5OGUyYTkxNDk0ZGJhN2NjOGUyZTNkZGFkODAtMTY3OTcyMDY1NQ=='
@@ -24,7 +24,7 @@ export function useEnhancedVideoList({ limit = 10 }: { limit?: number } = {}) {
         })
     )
 
-    return enhancedVideos
+    return enhancedVideos.filter(video => video.data.status === 'processing' || video.data.status === 'pending')
   }
 
   const { data, pending, error, refresh } = useAsyncData<EnhancedVideo[]>(
