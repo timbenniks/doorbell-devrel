@@ -6,7 +6,7 @@ const { introAsset, noiseAsset, openMediaLibrary } = useCloudinaryWidget();
 const state = reactive({
   title: "",
   background_noise: "dd/noise",
-  intro: "dd/small_intro",
+  intro: "dd/intro_small",
   vignette: true,
   text: "",
   avatar_id: "",
@@ -29,7 +29,7 @@ async function create() {
     },
   });
 
-  const newCSVideo = await $fetch("/api/cs-automate-new", {
+  await $fetch("/api/cs-automate-new", {
     method: "POST",
     body: {
       title: state.title,
