@@ -5,14 +5,18 @@ const { introAsset, noiseAsset, openMediaLibrary } = useCloudinaryWidget();
 
 const state = reactive({
   title: "",
-  background_noise: "dd/noise",
-  intro: "dd/intro_small",
-  vignette: true,
+  background_noise: "",
+  intro: "",
+  vignette: false,
   text: "",
   avatar_id: "",
 });
 
 function selectAvatar(avatar: any) {
+  console.log(avatar);
+  state.background_noise = avatar.background_noise;
+  state.intro = avatar.intro;
+  state.vignette = avatar.vignette;
   state.avatar_id = avatar.avatar_id;
 }
 
@@ -168,7 +172,6 @@ watch(noiseAsset, () => {
                 :description="`Voice: ${avatar.voice}`"
                 @click="selectAvatar(avatar)"
                 :title="avatar.avatar"
-                :badge="{ label: `Gender: ${avatar.gender}` }"
                 :image="avatar.thumbnail.url"
                 :ui="{
                   image: {

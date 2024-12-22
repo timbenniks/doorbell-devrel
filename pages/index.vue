@@ -40,7 +40,6 @@ async function refreshList() {
       </UDashboardToolbar>
 
       <UDashboardPanelContent>
-        <p v-if="videosStatus !== 'success'">Loading...</p>
         <p v-if="videos?.length === 0 && videosStatus === 'success'">
           No videos yet...
 

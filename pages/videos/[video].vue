@@ -29,6 +29,22 @@ const cloudinaryUrl = computed(() => {
 
   return url;
 });
+
+function downloadFile(url: string, filename: string) {
+  fetch(url)
+    .then((response) => response.blob())
+    .then((blob) => {
+      const url = URL.createObjectURL(blob);
+      const a = document.createElement("a");
+      a.href = url;
+      a.download = filename || "download";
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+      URL.revokeObjectURL(url);
+    })
+    .catch((error) => console.error("Download failed:", error));
+}
 </script>
 
 <template>
@@ -42,7 +58,7 @@ const cloudinaryUrl = computed(() => {
             :loading="false"
             icon="i-heroicons-folder-arrow-down"
             size="md"
-            @click=""
+            @click="downloadFile(cloudinaryUrl, state.title)"
           >
             Download
           </UButton>
@@ -118,7 +134,12 @@ const cloudinaryUrl = computed(() => {
               label="Duration"
               :ui="{ wrapper: 'mb-6' }"
             >
-              <UInput v-model="state.duration" color="primary" size="xl" />
+              <UInput
+                v-model="state.duration"
+                color="primary"
+                size="xl"
+                disabled
+              />
             </UFormGroup>
 
             <UFormGroup name="date" label="Date" :ui="{ wrapper: 'mb-6' }">
