@@ -3,7 +3,6 @@ import { formatInTimeZone } from "date-fns-tz";
 
 defineProps<{
   data: any;
-  processing: any;
 }>();
 
 function getCSImageVersion(thumbnail: any) {
@@ -32,45 +31,13 @@ function getCSImageVersion(thumbnail: any) {
     }"
   >
     <UBlogPost
-      v-if="processing && processing.video_id"
-      class="blogpost"
-      :key="processing.video_id"
-      :title="processing.video_title"
-      :date="
-        formatInTimeZone(Date.now(), 'Europe/Berlin', `MMM d, yyyy 'at' HH:mm`)
-      "
-      orientation="vertical"
-      :authors="[
-        {
-          name: 'Tim Benniks',
-          avatar: {
-            src: 'https://avatars.githubusercontent.com/u/121096?v=4',
-          },
-        },
-      ]"
-      :badge="{
-        label: processing.data.status,
-        color: processing.data.status === 'pending' ? 'yellow' : 'red',
-      }"
-      :ui="{
-        image: {
-          wrapper:
-            'ring-1 ring-gray-200 dark:ring-gray-800 relative overflow-hidden aspect-[9/16] w-full rounded-lg pointer-events-none',
-        },
-      }"
-    >
-      <template #image>
-        <div class="relative w-full h-full bg-slate-800"></div>
-      </template>
-    </UBlogPost>
-
-    <UBlogPost
       class="blogpost"
       v-for="video in data"
       :to="`/videos/${video.uid}`"
       :key="video.video_id"
       :title="video.title"
       :date="
+        video.created_at &&
         formatInTimeZone(
           video.created_at,
           'Europe/Berlin',
@@ -86,7 +53,10 @@ function getCSImageVersion(thumbnail: any) {
           },
         },
       ]"
-      :badge="{ label: video.heygen_status }"
+      :badge="{
+        label: video.heygen_status,
+        color: video.heygen_status === 'processing' ? 'red' : 'indigo',
+      }"
       :ui="{
         image: {
           wrapper:
@@ -97,6 +67,7 @@ function getCSImageVersion(thumbnail: any) {
       <template #image>
         <div class="relative w-full h-full">
           <img
+            v-if="video.animated_poster"
             :src="video.animated_poster.url"
             :width="90"
             :height="160"
@@ -107,6 +78,7 @@ function getCSImageVersion(thumbnail: any) {
           />
 
           <NuxtImg
+            v-if="video.poster"
             provider="contentstack"
             :src="video.poster.filename"
             :quality="90"
@@ -123,6 +95,11 @@ function getCSImageVersion(thumbnail: any) {
             class="absolute w-full h-full z-20 thumb"
             loading="lazy"
             fetchpriority="auto"
+          />
+
+          <USkeleton
+            v-if="!video.poster && !video.animated_poster"
+            class="relative w-full h-full"
           />
         </div>
       </template>

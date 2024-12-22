@@ -32,6 +32,12 @@ useSeoMeta({
 </script>
 
 <template>
+  <Head>
+    <Script
+      src="https://media-library.cloudinary.com/global/all.js"
+      async
+    ></Script>
+  </Head>
   <div>
     <NuxtLoadingIndicator />
 

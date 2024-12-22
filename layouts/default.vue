@@ -9,10 +9,10 @@ const links = [
     to: "/",
   },
   {
-    id: "settings",
-    label: "Settings",
-    to: "/settings",
-    icon: "i-heroicons-cog-8-tooth",
+    id: "avatars",
+    label: "Avatars",
+    to: "/avatars",
+    icon: "i-heroicons-user",
   },
 ];
 

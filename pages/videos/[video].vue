@@ -2,61 +2,42 @@
 const route = useRoute();
 
 const { data: video } = useVideoById(route.params.video as string);
+const { introAsset, noiseAsset, openMediaLibrary } = useCloudinaryWidget();
+import { generateCloudinaryUrl } from "../../utils/cloudinaryUrl";
 
-import type { FormError, FormSubmitEvent } from "#ui/types";
+const state = reactive(video);
 
-const state = reactive({
-  name: "Benjamin Canac",
-  email: "ben@nuxtlabs.com",
-  username: "benjamincanac",
-  avatar: "",
-  bio: "",
-  password_current: "",
-  password_new: "",
+watch(introAsset, () => {
+  state.intro = introAsset.value.public_id;
 });
 
-const toast = useToast();
+watch(noiseAsset, () => {
+  state.background_noise = noiseAsset.value.public_id;
+});
 
-function validate(state: any): FormError[] {
-  const errors = [];
-  if (!state.name)
-    errors.push({ path: "name", message: "Please enter your name." });
-  if (!state.email)
-    errors.push({ path: "email", message: "Please enter your email." });
-  if (
-    (state.password_current && !state.password_new) ||
-    (!state.password_current && state.password_new)
-  )
-    errors.push({
-      path: "password",
-      message: "Please enter a valid password.",
-    });
-  return errors;
-}
+const cloudinaryUrl = computed(() => {
+  let url = "";
 
-async function onSubmit(event: FormSubmitEvent<any>) {
-  // Do something with data
-  console.log(event.data);
+  if (state && state.value) {
+    url = generateCloudinaryUrl(
+      state.value.cloudinary_video,
+      state.value.background_noise,
+      state.value.vignette,
+      state.value.intro
+    );
+  }
 
-  toast.add({ title: "Profile updated", icon: "i-heroicons-check-circle" });
-}
+  return url;
+});
 </script>
 
 <template>
   <UDashboardPage>
     <UDashboardPanel grow>
-      <UDashboardNavbar :title="`Video: ${video.title}`" />
+      <UDashboardNavbar v-if="state" :title="`Video: ${state.title}`" />
 
       <UDashboardToolbar>
         <template #left>
-          <UButton
-            :loading="false"
-            icon="i-heroicons-server"
-            size="md"
-            @click=""
-          >
-            Save
-          </UButton>
           <UButton
             :loading="false"
             icon="i-heroicons-folder-arrow-down"
@@ -78,27 +59,85 @@ async function onSubmit(event: FormSubmitEvent<any>) {
 
       <UDashboardPanelContent>
         <div class="grid lg:grid-cols-2 gap-8">
-          <UForm
-            :state="state"
-            :validate="validate"
-            :validate-on="['submit']"
-            @submit="onSubmit"
-          >
+          <UForm :state="state" v-if="state">
             <UFormGroup
-              name="name"
-              label="Name"
-              description="Will appear on receipts, invoices, and other communication."
+              name="title"
+              label="Title"
               required
+              :ui="{ wrapper: 'mb-6' }"
             >
               <UInput
-                v-model="state.name"
+                color="primary"
+                v-model="state.title"
                 autocomplete="off"
-                icon="i-heroicons-user"
-                size="md"
+                size="xl"
+                placeholder="Video title"
+                disabled
+              />
+            </UFormGroup>
+
+            <UFormGroup
+              name="background_noise"
+              label="Background Noise"
+              :ui="{ wrapper: 'mb-6' }"
+            >
+              <UInput
+                icon="i-heroicons-folder"
+                v-model="state.background_noise"
+                autocomplete="off"
+                size="xl"
+                color="primary"
+                disabled
+              />
+            </UFormGroup>
+
+            <UFormGroup name="intro" label="Intro" :ui="{ wrapper: 'mb-6' }">
+              <UInput
+                icon="i-heroicons-folder"
+                v-model="state.intro"
+                autocomplete="off"
+                color="primary"
+                size="xl"
+                disabled
+              />
+            </UFormGroup>
+
+            <UFormGroup
+              name="vignette"
+              label="Video effects"
+              :ui="{ wrapper: 'mb-6' }"
+            >
+              <UCheckbox v-model="state.vignette" label="Vignette" />
+            </UFormGroup>
+            <UFormGroup name="URL" label="URL" :ui="{ wrapper: 'mb-6' }">
+              <UTextarea v-model="cloudinaryUrl" size="xl" disabled />
+            </UFormGroup>
+
+            <UFormGroup
+              name="duration"
+              label="Duration"
+              :ui="{ wrapper: 'mb-6' }"
+            >
+              <UInput v-model="state.duration" color="primary" size="xl" />
+            </UFormGroup>
+
+            <UFormGroup name="date" label="Date" :ui="{ wrapper: 'mb-6' }">
+              <UInput
+                v-model="state.created_at"
+                color="primary"
+                size="xl"
+                disabled
               />
             </UFormGroup>
           </UForm>
-          <div>lala</div>
+          <div>
+            <VideoPlayer
+              v-if="state"
+              :url="cloudinaryUrl"
+              :poster="state && state.poster?.url"
+              class="max-w-md"
+            />
+          </div>
         </div>
       </UDashboardPanelContent>
     </UDashboardPanel>

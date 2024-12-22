@@ -1,10 +1,13 @@
 import type { EnhancedVideo, VideoList, Video, VideoDetail } from '../types'
 
 export function useProcessingVideos({ limit = 2 }: { limit?: number } = {}) {
+  const { heyGenApiKey } = useRuntimeConfig().public
+
   const headers = {
-    'accept': 'application/json',
-    'x-api-key': 'YjkyNDU5OGUyYTkxNDk0ZGJhN2NjOGUyZTNkZGFkODAtMTY3OTcyMDY1NQ=='
+    accept: 'application/json',
+    'x-api-key': heyGenApiKey as string
   }
+
 
   const fetchEnhancedVideos = async () => {
     const videoList = await $fetch<VideoList>(`https://api.heygen.com/v1/video.list?limit=${limit}`, { headers })
@@ -15,7 +18,9 @@ export function useProcessingVideos({ limit = 2 }: { limit?: number } = {}) {
         .map(async (video: Video) => {
           const videoDetail = await $fetch<VideoDetail>(
             `https://api.heygen.com/v1/video_status.get?video_id=${video.video_id}`,
-            { headers }
+            {
+              headers
+            }
           )
 
           return { ...video, ...videoDetail }

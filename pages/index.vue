@@ -9,20 +9,11 @@ const {
   status: videosStatus,
 } = useGetVideos();
 
-const {
-  data: processing,
-  refresh: refreshProcessing,
-  status: processingStatus,
-} = useProcessingVideos({
-  limit: 2,
-});
-
 const listRefreshing = ref(false);
 
 async function refreshList() {
   listRefreshing.value = true;
   await refreshVideos();
-  await refreshProcessing();
   listRefreshing.value = false;
 }
 </script>
@@ -42,20 +33,26 @@ async function refreshList() {
           >
             Refresh list
           </UButton>
-          <UButton
-            icon="i-heroicons-play"
-            size="md"
-            to="https://app.heygen.com/create-v3/draft?vt=p"
-            target="_blank"
+          <UButton icon="i-heroicons-play" size="md" to="/videos/new"
             >New Video</UButton
           >
         </template>
       </UDashboardToolbar>
 
       <UDashboardPanelContent>
-        <p>{{ videosStatus }}</p>
-        <p>{{ processingStatus }}</p>
-        <VideosList :processing="processing && processing[0]" :data="videos" />
+        <p v-if="videosStatus !== 'success'">Loading...</p>
+        <p v-if="videos?.length === 0 && videosStatus === 'success'">
+          No videos yet...
+
+          <ULink
+            to="/videos/new"
+            active-class="text-primary"
+            inactive-class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+          >
+            Create one here.
+          </ULink>
+        </p>
+        <VideosList v-else :data="videos" />
       </UDashboardPanelContent>
     </UDashboardPanel>
   </UDashboardPage>
