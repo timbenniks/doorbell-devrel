@@ -16,14 +16,6 @@ const links = [
   },
 ];
 
-const footerLinks = [
-  {
-    label: "Help & Support",
-    icon: "i-heroicons-question-mark-circle",
-    click: () => (isHelpSlideoverOpen.value = true),
-  },
-];
-
 const groups = [
   {
     key: "links",
@@ -62,8 +54,6 @@ const groups = [
         <UDivider />
 
         <div class="flex-1" />
-
-        <UDashboardSidebarLinks :links="footerLinks" />
 
         <UDivider class="sticky bottom-0" />
 

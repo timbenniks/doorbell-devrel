@@ -22,12 +22,6 @@ const items = computed(() => [
         isDashboardSearchModalOpen.value = true;
       },
     },
-    {
-      label: "Help & Support",
-      icon: "i-heroicons-question-mark-circle",
-      shortcuts: ["?"],
-      click: () => (isHelpSlideoverOpen.value = true),
-    },
   ],
   [
     {

@@ -1,5 +1,4 @@
 import type { LivePreviewQuery } from "@contentstack/delivery-sdk"
-// import contentstack from "@contentstack/delivery-sdk"
 
 export function useGetVideos() {
   const getVideos = async () => {
