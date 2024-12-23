@@ -54,6 +54,18 @@ watch(introAsset, () => {
 watch(noiseAsset, () => {
   state.background_noise = noiseAsset.value.public_id;
 });
+
+const aiLoading = ref(false);
+
+async function getAIToHelp(text: string) {
+  aiLoading.value = true;
+  const response = await $fetch("/api/cs-automate-copy-create", {
+    method: "POST",
+    body: { prompt: text },
+  });
+  aiLoading.value = false;
+  state.text = response.response.replace("[DONE]", "");
+}
 </script>
 
 <template>
@@ -96,6 +108,15 @@ watch(noiseAsset, () => {
               required
               :ui="{ wrapper: 'mb-6' }"
             >
+              <template #hint>
+                <UButton
+                  :loading="aiLoading"
+                  variant="link"
+                  icon="i-heroicons-sparkles"
+                  :padded="false"
+                  @click="getAIToHelp(state.text)"
+                />
+              </template>
               <UTextarea
                 v-model="state.text"
                 color="primary"
