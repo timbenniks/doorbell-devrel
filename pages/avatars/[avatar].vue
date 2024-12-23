@@ -1,51 +1,10 @@
 <script setup lang="ts">
-const { data: avatars } = useGetAvatars();
+const route = useRoute();
 
+const { data: avatar } = useAvatarById(route.params.avatar as string);
 const { introAsset, noiseAsset, openMediaLibrary } = useCloudinaryWidget();
 
-const state = reactive({
-  title: "",
-  background_noise: "",
-  intro: "",
-  vignette: false,
-  text: "",
-  avatar_id: "",
-});
-
-function selectAvatar(avatar: any) {
-  state.background_noise = avatar.background_noise;
-  state.intro = avatar.intro;
-  state.vignette = avatar.vignette;
-  state.avatar_id = avatar.avatar_id;
-}
-
-const toast = useToast();
-async function create() {
-  toast.add({ title: "Creating video", icon: "i-heroicons-check-circle" });
-
-  const newHeygenVideo = await $fetch("/api/new-video", {
-    method: "POST",
-    body: {
-      title: state.title,
-      text: state.text,
-      avatar_id: state.avatar_id,
-    },
-  });
-
-  await $fetch("/api/cs-automate-new", {
-    method: "POST",
-    body: {
-      title: state.title,
-      intro: state.intro,
-      background_noise: state.background_noise,
-      avatar_id: state.avatar_id,
-      video_id: newHeygenVideo.response.data.video_id,
-      vignette: state.vignette,
-    },
-  });
-
-  navigateTo("/");
-}
+const state = reactive(avatar);
 
 watch(introAsset, () => {
   state.intro = introAsset.value.public_id;
@@ -54,30 +13,60 @@ watch(introAsset, () => {
 watch(noiseAsset, () => {
   state.background_noise = noiseAsset.value.public_id;
 });
+
+const toast = useToast();
+async function save() {
+  toast.add({ title: "Updating Avatar", icon: "i-heroicons-check-circle" });
+  const response = await $fetch("/api/cs-automate-avatar-update", {
+    method: "POST",
+    body: state.value,
+  });
+
+  console.log(response);
+}
 </script>
 
 <template>
   <UDashboardPage>
     <UDashboardPanel grow>
-      <UDashboardNavbar title="New video" />
+      <UDashboardNavbar v-if="state" :title="`Avatar: ${state.title}`" />
+
       <UDashboardToolbar>
         <template #left>
           <UButton
             :loading="false"
             icon="i-heroicons-server"
             size="md"
-            @click="create"
+            @click="save"
           >
-            Create
+            Update
+          </UButton>
+          <UButton
+            :loading="false"
+            icon="i-heroicons-user"
+            size="md"
+            target="_blank"
+            to="https://app.heygen.com/avatars/looks?avatarId=f32890fbb32a48fbb8c773b8386941f8&look_type=video"
+          >
+            See in HeyGen
+          </UButton>
+          <UButton
+            :loading="false"
+            icon="i-heroicons-play"
+            size="md"
+            to="/videos/new"
+          >
+            New Video
           </UButton>
         </template>
       </UDashboardToolbar>
+
       <UDashboardPanelContent>
-        <div class="grid lg:grid-cols-2 gap-8">
-          <UForm :state="state">
+        <div class="grid grid-cols-2 gap-8">
+          <UForm :state="state" v-if="state">
             <UFormGroup
               name="title"
-              label="Title"
+              label="CMS Title"
               required
               :ui="{ wrapper: 'mb-6' }"
             >
@@ -86,21 +75,67 @@ watch(noiseAsset, () => {
                 v-model="state.title"
                 autocomplete="off"
                 size="xl"
-                placeholder="Video title"
+                placeholder="Avatar title"
               />
             </UFormGroup>
 
             <UFormGroup
-              name="text"
-              label="Text"
+              name="avatar"
+              label="Avatar"
               required
               :ui="{ wrapper: 'mb-6' }"
             >
-              <UTextarea
-                v-model="state.text"
+              <UInput
                 color="primary"
-                placeholder="What do you want the avatar to say?"
+                v-model="state.avatar"
+                autocomplete="off"
                 size="xl"
+                placeholder="Avatar title"
+              />
+            </UFormGroup>
+
+            <UFormGroup
+              name="avatar_id"
+              label="HeyGen Avatar ID"
+              required
+              :ui="{ wrapper: 'mb-6' }"
+            >
+              <UInput
+                color="primary"
+                v-model="state.avatar_id"
+                autocomplete="off"
+                size="xl"
+                placeholder="Avatar ID"
+              />
+            </UFormGroup>
+
+            <UFormGroup
+              name="voice"
+              label="Elevenlabs Voice"
+              required
+              :ui="{ wrapper: 'mb-6' }"
+            >
+              <UInput
+                color="primary"
+                v-model="state.voice"
+                autocomplete="off"
+                size="xl"
+                placeholder="Avatar ID"
+              />
+            </UFormGroup>
+
+            <UFormGroup
+              name="voice_id"
+              label="Elevenlabs Voice ID"
+              required
+              :ui="{ wrapper: 'mb-6' }"
+            >
+              <UInput
+                color="primary"
+                v-model="state.voice_id"
+                autocomplete="off"
+                size="xl"
+                placeholder="Avatar ID"
               />
             </UFormGroup>
 
@@ -156,31 +191,14 @@ watch(noiseAsset, () => {
               <UCheckbox v-model="state.vignette" label="Vignette" />
             </UFormGroup>
           </UForm>
-
-          <UFormGroup label="Select avatar" required>
-            <UBlogList orientation="horizontal">
-              <UBlogPost
-                class="cursor-pointer"
-                :class="{
-                  'bg-indigo-900 p-2 rounded-xl':
-                    state.avatar_id === avatar.avatar_id,
-                }"
-                v-for="avatar in avatars"
-                :key="avatar.uid"
-                orientation="vertical"
-                :description="`Voice: ${avatar.voice}`"
-                @click="selectAvatar(avatar)"
-                :title="avatar.avatar"
-                :image="avatar.thumbnail.url"
-                :ui="{
-                  image: {
-                    wrapper:
-                      'ring-1 ring-gray-200 dark:ring-gray-800 relative overflow-hidden aspect-[960/720] w-full rounded-lg pointer-events-none',
-                  },
-                }"
-              />
-            </UBlogList>
-          </UFormGroup>
+          <div>
+            <img
+              v-if="state"
+              :src="state.thumbnail.url"
+              class="rounded-xl"
+              loading="lazy"
+            />
+          </div>
         </div>
       </UDashboardPanelContent>
     </UDashboardPanel>

@@ -5,6 +5,15 @@ const { data: video } = useVideoById(route.params.video as string);
 const { introAsset, noiseAsset, openMediaLibrary } = useCloudinaryWidget();
 import { generateCloudinaryUrl } from "../../utils/cloudinaryUrl";
 
+interface State {
+  title: string;
+  background_noise: string;
+  intro: string;
+  vignette: boolean;
+  text: string;
+  avatar_id: string;
+}
+
 const state = reactive(video);
 
 watch(introAsset, () => {

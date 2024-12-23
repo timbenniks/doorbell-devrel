@@ -1,8 +1,8 @@
 import type { LivePreviewQuery } from "@contentstack/delivery-sdk"
 import contentstack from "@contentstack/delivery-sdk"
 
-export function useVideoById(videoId: string) {
-  const getVideo = async () => {
+export function useAvatarById(avatarId: string) {
+  const getAvatar = async () => {
     const { $preview, $stack } = useNuxtApp()
     const route = useRoute()
     const qs = toRaw(route.query)
@@ -14,18 +14,18 @@ export function useVideoById(videoId: string) {
     }
 
     const entry = await $stack
-      .contentType("video")
-      .entry(videoId)
+      .contentType("avatar")
+      .entry(avatarId)
       .fetch()
 
     if ($preview) {
-      contentstack.Utils.addEditableTags(entry as any, 'video', true)
+      contentstack.Utils.addEditableTags(entry as any, 'avatar', true)
     }
 
     return entry
   }
 
-  const { data, status, error, refresh } = useAsyncData(`video-${videoId}`, getVideo)
+  const { data, status, error, refresh } = useAsyncData(`avatar-${avatarId}`, getAvatar)
 
   return { data, status, error, refresh }
 }
