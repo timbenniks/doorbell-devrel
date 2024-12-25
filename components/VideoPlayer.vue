@@ -13,7 +13,6 @@ defineProps<{
           :src="url"
           controls
           class="absolute top-0 left-0 w-full h-full rounded-lg object-cover"
-          preload="metadata"
           :poster="poster"
         >
           Your browser does not support the video tag.

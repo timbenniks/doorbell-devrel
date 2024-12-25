@@ -11,9 +11,12 @@ export default defineNuxtConfig({
     '@nuxt/image'
   ],
 
-  ssr: false,
-
   routeRules: {
+    '/': { ssr: false },
+    '/avatars': { ssr: false },
+    '/avatars/*': { ssr: false },
+    '/videos/*': { ssr: false },
+    "/videos/share/*": { ssr: true },
     "/videos": {
       redirect: {
         to: "/",

@@ -2,16 +2,14 @@
 
 ## features
 
-- Nuxt UI Pro
-- requires login (nuxt auth utils)
-- overview of all finished videos (nuxt hub)
-- finsihed video page
-  - share video on socials as directly uploaded
-- create new video
-- select from list of heygen vids
-- select SRT file
-- upload to cloudinary via API most likely
-- select intro
-- select srt offset
-- select noise
-- select music
+### TODO
+
+- Share page for socials
+- MOAR automation, less logic
+  - new heygen video
+  - get videos
+  - get video
+  - get avatars
+  - get avatar
+- Settings page for endpoint URLs
+-

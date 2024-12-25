@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: "auth",
+});
+
 const route = useRoute();
 
 const { data: video } = useVideoById(route.params.video as string);
@@ -75,7 +79,7 @@ function downloadFile(url: string, filename: string) {
             :loading="false"
             icon="i-heroicons-share"
             size="md"
-            @click=""
+            :to="`/videos/share/${state && state.uid}`"
           >
             Share
           </UButton>

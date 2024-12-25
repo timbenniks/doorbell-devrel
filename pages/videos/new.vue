@@ -1,4 +1,8 @@
 <script setup lang="ts">
+definePageMeta({
+  middleware: "auth",
+});
+
 const { data: avatars } = useGetAvatars();
 
 const { introAsset, noiseAsset, openMediaLibrary } = useCloudinaryWidget();
