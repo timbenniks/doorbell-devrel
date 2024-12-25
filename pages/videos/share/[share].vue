@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import contentstack, { Region } from "@contentstack/delivery-sdk";
 import { generateCloudinaryUrl } from "../../../utils/cloudinaryUrl";
 
 definePageMeta({
@@ -7,40 +8,46 @@ definePageMeta({
 
 const route = useRoute();
 
-const { data: video } = useVideoById(route.params.share as string);
+const { apiKey, deliveryToken, environment } = useRuntimeConfig().public;
+
+const stack = contentstack.stack({
+  apiKey,
+  deliveryToken,
+  environment,
+  region: Region.EU,
+});
+
+const video = await stack
+  .contentType("video")
+  .entry(route.params.share as string)
+  .fetch();
 
 const cloudinaryUrl = computed(() => {
-  let url = "";
-
-  if (video && video.value) {
-    url = generateCloudinaryUrl(
-      video.value.cloudinary_video,
-      video.value.background_noise,
-      video.value.vignette,
-      video.value.intro
-    );
-  }
+  const url = generateCloudinaryUrl(
+    video.cloudinary_video,
+    video.background_noise,
+    video.vignette,
+    video.intro
+  );
 
   return url;
 });
 
 useSeoMeta({
-  title: `Doorbell DevRel: ${video && video?.value?.title}`,
-  ogTitle: `Doorbell DevRel: ${video && video?.value?.title}`,
-  description: video && video?.value?.description,
-  ogDescription: video && video?.value?.description,
+  title: `Doorbell DevRel: ${video.title}`,
+  ogTitle: `Doorbell DevRel: ${video.title}`,
+  description: video.description,
+  ogDescription: video.description,
   twitterCard: "summary_large_image",
   ogType: "video.other",
-  ogUrl: `https://doorbelldevrel.timbenniks.dev/videos/share/${
-    video && video?.value?.uid
-  }`,
+  ogUrl: `https://doorbelldevrel.timbenniks.dev/videos/share/${video.uid}`,
   ogVideo: cloudinaryUrl.value,
   ogVideoSecureUrl: cloudinaryUrl.value,
   ogVideoType: "video/mp4",
   ogVideoWidth: "720",
   ogVideoHeight: "1280",
-  twitterDescription: video && video?.value?.description,
-  twitterTitle: video && video?.value?.title,
+  twitterDescription: video.description,
+  twitterTitle: video.title,
 });
 </script>
 
