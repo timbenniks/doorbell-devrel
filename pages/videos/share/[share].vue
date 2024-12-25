@@ -39,6 +39,7 @@ useSeoMeta({
   description: video.description,
   ogDescription: video.description,
   twitterCard: "summary_large_image",
+  ogImage: video.poster.url,
   ogType: "video.other",
   ogUrl: `https://doorbelldevrel.timbenniks.dev/videos/share/${video.uid}`,
   ogVideo: cloudinaryUrl.value,
