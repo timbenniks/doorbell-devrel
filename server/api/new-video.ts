@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   await requireUserSession(event)
 
   const body = await readBody(event);
-  const { title, text, avatarid } = body;
+  const { title, text, avatar_id } = body;
 
   if (!title || !text) {
     return {
@@ -31,7 +31,7 @@ export default defineEventHandler(async (event) => {
         {
           character: {
             type: 'avatar',
-            avatar_id: avatarid || 'cb8556ae91434b5a8ab2363df4fd9eef',
+            avatar_id: avatar_id,
             scale: 2.4,
           },
           voice: {
