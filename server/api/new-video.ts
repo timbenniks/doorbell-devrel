@@ -23,7 +23,7 @@ export default defineEventHandler(async (event) => {
         "width": 720,
         "height": 1280
       },
-      test: true,
+      test: false,
       caption: true,
       callback_id: null,
       title,
