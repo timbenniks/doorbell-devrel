@@ -1,6 +1,8 @@
 <script setup lang="ts">
 import contentstack, { Region } from "@contentstack/delivery-sdk";
 import { generateCloudinaryUrl } from "../../../utils/cloudinaryUrl";
+import { useShare } from "@vueuse/core";
+import { isClient } from "@vueuse/shared";
 
 definePageMeta({
   layout: "auth",
@@ -50,11 +52,25 @@ useSeoMeta({
   twitterDescription: video.description,
   twitterTitle: video.title,
 });
+
+const options = ref({
+  title: `Doorbell DevRel: ${video.title}`,
+  text: video.description,
+  url: isClient ? location.href : "",
+  file: cloudinaryUrl.value,
+});
+
+const { share, isSupported } = useShare(options);
+
+function startShare() {
+  return share().catch((err) => err);
+}
 </script>
 
 <template>
   <UCard class="max-w-[480px] w-full bg-white/75 dark:bg-white/5 backdrop-blur">
     <h1 v-if="video" class="font-bold text-2xl mb-4">{{ video.title }}</h1>
+    <UButton @click="startShare" class="mb-4">Share</UButton>
     <VideoPlayer
       v-if="cloudinaryUrl"
       :url="cloudinaryUrl"

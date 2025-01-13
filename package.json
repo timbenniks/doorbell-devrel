@@ -10,16 +10,18 @@
     "postinstall": "nuxt prepare"
   },
   "dependencies": {
-    "@contentstack/delivery-sdk": "^4.4.3",
-    "@contentstack/live-preview-utils": "^3.0.1",
+    "@contentstack/delivery-sdk": "^4.4.4",
+    "@contentstack/live-preview-utils": "^3.0.2",
     "@nuxt/fonts": "^0.10.3",
-    "@nuxt/image": "^1.8.1",
+    "@nuxt/image": "^1.9.0",
     "@nuxt/ui": "^2.20.0",
     "@nuxt/ui-pro": "^1.6.0",
+    "@vueuse/core": "^12.4.0",
+    "@vueuse/shared": "^12.4.0",
     "cloudinary": "^2.5.1",
     "date-fns": "^4.1.0",
     "date-fns-tz": "^3.2.0",
-    "nuxt": "^3.14.1592",
+    "nuxt": "^3.15.1",
     "nuxt-auth-utils": "^0.5.7",
     "vue": "latest",
     "vue-router": "latest"
