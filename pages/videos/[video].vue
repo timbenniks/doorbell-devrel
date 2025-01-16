@@ -58,6 +58,10 @@ function downloadFile(url: string, filename: string) {
     })
     .catch((error) => console.error("Download failed:", error));
 }
+
+async function copyText(text: string) {
+  await navigator.clipboard.writeText(text);
+}
 </script>
 
 <template>
@@ -140,6 +144,15 @@ function downloadFile(url: string, filename: string) {
             </UFormGroup>
             <UFormGroup name="URL" label="URL" :ui="{ wrapper: 'mb-6' }">
               <UTextarea v-model="cloudinaryUrl" size="xl" disabled />
+
+              <template #hint>
+                <UButton
+                  variant="link"
+                  icon="i-heroicons-document-duplicate"
+                  :padded="false"
+                  @click="copyText(cloudinaryUrl)"
+                />
+              </template>
             </UFormGroup>
 
             <UFormGroup

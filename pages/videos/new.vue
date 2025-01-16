@@ -14,6 +14,7 @@ const state = reactive({
   vignette: false,
   text: "",
   avatar_id: "",
+  prompt: "",
 });
 
 function selectAvatar(avatar: any) {
@@ -45,6 +46,7 @@ async function create() {
       avatar_id: state.avatar_id,
       video_id: newHeygenVideo.response.data.video_id,
       vignette: state.vignette,
+      prompt: state.prompt,
     },
   });
 
@@ -107,25 +109,42 @@ async function getAIToHelp(text: string) {
             </UFormGroup>
 
             <UFormGroup
-              name="text"
-              label="Text"
-              required
+              name="prompt"
+              label="Prompt Brandkit"
+              v-model="state.prompt"
               :ui="{ wrapper: 'mb-6' }"
             >
+              <UTextarea
+                v-model="state.prompt"
+                color="primary"
+                placeholder="Ask Brandkit to help you write the text"
+                size="xl"
+                autoresize
+              />
+
               <template #hint>
                 <UButton
                   :loading="aiLoading"
                   variant="link"
                   icon="i-heroicons-sparkles"
                   :padded="false"
-                  @click="getAIToHelp(state.text)"
+                  @click="getAIToHelp(state.prompt)"
                 />
               </template>
+            </UFormGroup>
+
+            <UFormGroup
+              name="text"
+              label="Text"
+              required
+              :ui="{ wrapper: 'mb-6' }"
+            >
               <UTextarea
                 v-model="state.text"
                 color="primary"
                 placeholder="What do you want the avatar to say?"
                 size="xl"
+                autoresize
               />
             </UFormGroup>
 

@@ -79,19 +79,13 @@ function getCSImageVersion(thumbnail: any) {
 
           <NuxtImg
             v-if="video.poster"
-            provider="contentstack"
-            :src="video.poster.filename"
+            :src="video.poster.url"
             :quality="90"
             :width="90"
             :height="160"
             fit="fill"
             :alt="video.title"
             sizes="sm:400px md:800px"
-            :modifiers="{
-              assetuid: video.poster.uid,
-              auto: 'avif',
-              versionuid: getCSImageVersion(video.poster),
-            }"
             class="absolute w-full h-full z-20 thumb"
             loading="lazy"
             fetchpriority="auto"

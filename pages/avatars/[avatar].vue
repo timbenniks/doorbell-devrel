@@ -24,8 +24,6 @@ async function save() {
     method: "POST",
     body: state.value,
   });
-
-  console.log(response);
 }
 </script>
 
