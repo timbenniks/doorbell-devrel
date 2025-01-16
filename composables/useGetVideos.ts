@@ -1,16 +1,6 @@
-import type { LivePreviewQuery } from "@contentstack/delivery-sdk"
-
 export function useGetVideos() {
   const getVideos = async () => {
-    const { $preview, $stack } = useNuxtApp()
-    const route = useRoute()
-    const qs = toRaw(route.query)
-
-    if ($preview && qs?.live_preview) {
-      const route = useRoute()
-      const qs = toRaw(route.query)
-      $stack.livePreviewQuery(qs as unknown as LivePreviewQuery)
-    }
+    const { $stack } = useNuxtApp()
 
     const result = await $stack
       .contentType("video")
@@ -38,15 +28,6 @@ export function useGetVideos() {
       ])
       .includeCount()
       .find();
-
-    if ($preview) {
-      result.entries?.forEach(entry => {
-        if (entry) {
-          //@ts-ignore
-          contentstack.Utils.addEditableTags(entry, 'video', true)
-        }
-      })
-    }
 
     return result.entries
   }

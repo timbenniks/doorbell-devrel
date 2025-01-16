@@ -3,12 +3,6 @@ definePageMeta({
   middleware: "auth",
 });
 
-const route = useRoute();
-
-const { data: video } = useVideoById(route.params.video as string);
-const { introAsset, noiseAsset, openMediaLibrary } = useCloudinaryWidget();
-import { generateCloudinaryUrl } from "../../utils/cloudinaryUrl";
-
 interface State {
   title: string;
   background_noise: string;
@@ -18,14 +12,19 @@ interface State {
   avatar_id: string;
 }
 
+const route = useRoute();
+const { data: video } = useVideoById(route.params.video as string);
+const { introAsset, noiseAsset } = useCloudinaryWidget();
+import { generateCloudinaryUrl } from "../../utils/cloudinaryUrl";
+
 const state = reactive(video);
 
 watch(introAsset, () => {
-  state.intro = introAsset.value.public_id;
+  state.intro = introAsset.value && introAsset.value.public_id;
 });
 
 watch(noiseAsset, () => {
-  state.background_noise = noiseAsset.value.public_id;
+  state.background_noise = noiseAsset.value && noiseAsset.value.public_id;
 });
 
 const cloudinaryUrl = computed(() => {

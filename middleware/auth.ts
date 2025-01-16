@@ -3,11 +3,12 @@ import { defineNuxtRouteMiddleware, useUserSession, navigateTo } from '#imports'
 export default defineNuxtRouteMiddleware(() => {
   const { loggedIn, user } = useUserSession()
 
-  if (user && user.value.githubId !== 121096) {
+  if (!loggedIn.value) {
     return navigateTo('/login')
   }
 
-  if (!loggedIn.value) {
+  // @ts-ignore
+  if (user && user.value && user.value?.githubId !== 121096) {
     return navigateTo('/login')
   }
 })
