@@ -15,6 +15,7 @@ const state = reactive({
   text: "",
   avatar_id: "",
   prompt: "",
+  elevenlabs: false,
 });
 
 function selectAvatar(avatar: any) {
@@ -71,6 +72,12 @@ async function getAIToHelp(text: string) {
   });
   aiLoading.value = false;
   state.text = response.response.replace("[DONE]", "");
+}
+
+function setupElevenLabs() {
+  state.elevenlabs = true;
+  // @ts-ignore - replaceWidgetTagWithIframe is an Elevenlabs is a global function
+  replaceWidgetTagWithIframe();
 }
 </script>
 
@@ -146,12 +153,22 @@ async function getAIToHelp(text: string) {
                 size="xl"
                 autoresize
               />
+
+              <template #hint>
+                <UButton
+                  variant="link"
+                  icon="i-heroicons-play"
+                  :padded="false"
+                  @click="setupElevenLabs()"
+                />
+              </template>
             </UFormGroup>
 
             <UFormGroup
               name="elevenlabs"
               label="ElevenLabs Text to Speech"
               required
+              v-if="state.elevenlabs"
               :ui="{ wrapper: 'mb-6' }"
             >
               <div class="hidden monolgue">{{ state.text }}</div>
