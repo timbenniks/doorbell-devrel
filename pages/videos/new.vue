@@ -149,6 +149,26 @@ async function getAIToHelp(text: string) {
             </UFormGroup>
 
             <UFormGroup
+              name="elevenlabs"
+              label="ElevenLabs Text to Speech"
+              required
+              :ui="{ wrapper: 'mb-6' }"
+            >
+              <div class="hidden monolgue">{{ state.text }}</div>
+              <div
+                id="elevenlabs-audionative-widget"
+                data-height="90"
+                data-width="100%"
+                data-frameborder="no"
+                data-scrolling="no"
+                data-publicuserid="df10259d19f189d866af1486f8db2459bc8d6bceab174b397b80a55972e28887"
+                data-playerurl="https://elevenlabs.io/player/index.html"
+              >
+                Loading Elevenlabs
+              </div>
+            </UFormGroup>
+
+            <UFormGroup
               name="background_noise"
               label="Background Noise"
               :ui="{ wrapper: 'mb-6' }"
