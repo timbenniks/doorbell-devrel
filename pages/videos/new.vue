@@ -76,8 +76,8 @@ async function getAIToHelp(text: string) {
 
 function setupElevenLabs() {
   state.elevenlabs = true;
-  // // @ts-ignore - replaceWidgetTagWithIframe is an Elevenlabs is a global function
-  // setTimeout(() => window.replaceWidgetTagWithIframe(), 2000);
+  // @ts-ignore - replaceWidgetTagWithIframe is an Elevenlabs is a global function
+  setTimeout(() => window.replaceWidgetTagWithIframe(), 2000);
 }
 </script>
 
