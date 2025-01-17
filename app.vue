@@ -34,7 +34,6 @@ useSeoMeta({
       src="https://media-library.cloudinary.com/global/all.js"
       async
     ></Script>
-    <Script src="https://elevenlabs.io/player/audioNativeHelper.js"></Script>
   </Head>
   <div>
     <NuxtLoadingIndicator />
