@@ -77,7 +77,7 @@ async function getAIToHelp(text: string) {
 function setupElevenLabs() {
   state.elevenlabs = true;
   // @ts-ignore - replaceWidgetTagWithIframe is an Elevenlabs is a global function
-  replaceWidgetTagWithIframe();
+  setTimeout(() => window.replaceWidgetTagWithIframe(), 2000);
 }
 </script>
 
@@ -171,7 +171,7 @@ function setupElevenLabs() {
               v-if="state.elevenlabs"
               :ui="{ wrapper: 'mb-6' }"
             >
-              <div class="hidden monolgue">{{ state.text }}</div>
+              <div class="invisible monolgue">{{ state.text }}</div>
               <div
                 id="elevenlabs-audionative-widget"
                 data-height="90"
@@ -181,7 +181,10 @@ function setupElevenLabs() {
                 data-publicuserid="df10259d19f189d866af1486f8db2459bc8d6bceab174b397b80a55972e28887"
                 data-playerurl="https://elevenlabs.io/player/index.html"
               >
-                Loading Elevenlabs
+                <div class="space-y-2">
+                  <USkeleton class="h-4 w-[250px]" />
+                  <USkeleton class="h-4 w-[200px]" />
+                </div>
               </div>
             </UFormGroup>
 
