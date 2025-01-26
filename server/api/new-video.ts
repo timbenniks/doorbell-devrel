@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   await requireUserSession(event)
 
   const body = await readBody(event);
-  const { title, text, avatar_id, voice_id } = body;
+  const { title, text, avatar_id, voice_id, width, height, scale } = body;
 
   if (!title || !text) {
     return {
@@ -20,8 +20,8 @@ export default defineEventHandler(async (event) => {
     },
     body: {
       dimension: {
-        "width": 720,
-        "height": 1280
+        width: width || 720,
+        height: height || 1280
       },
       test: false,
       caption: true,
@@ -30,9 +30,9 @@ export default defineEventHandler(async (event) => {
       video_inputs: [
         {
           character: {
-            type: 'avatar',
+            type: "avatar",
             avatar_id: avatar_id,
-            scale: 2.4,
+            scale: scale || 2.4
           },
           voice: {
             type: "text",

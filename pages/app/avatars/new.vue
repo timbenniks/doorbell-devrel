@@ -20,7 +20,7 @@ const state = reactive({
 const toast = useToast();
 async function create() {
   toast.add({ title: "Creating Avatar", icon: "i-heroicons-check-circle" });
-  const response = await $fetch("/api/cs-automate-avatar-new", {
+  await $fetch("/api/cs-automate-avatar-new", {
     method: "POST",
     body: state,
   });

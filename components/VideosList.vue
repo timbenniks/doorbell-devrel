@@ -1,25 +1,10 @@
 <script setup lang="ts">
 import { formatInTimeZone } from "date-fns-tz";
+import { getCSImageVersion } from "@/utils/getCSImageVersion";
 
 defineProps<{
   data: any;
 }>();
-
-function getCSImageVersion(thumbnail: any) {
-  const { apiKey, assetHost } = useRuntimeConfig().public;
-
-  const assetuid = thumbnail?.uid;
-  const url = thumbnail?.url;
-  const src = thumbnail?.filename;
-
-  const baseStr = url.split(src)[0];
-
-  const versionuid = baseStr.split(
-    `https://${assetHost}/${apiKey}/${assetuid}/`
-  )[1];
-
-  return versionuid && versionuid.slice(0, -1);
-}
 </script>
 
 <template>
@@ -66,29 +51,43 @@ function getCSImageVersion(thumbnail: any) {
     >
       <template #image>
         <div class="relative w-full h-full">
-          <img
+          <NuxtImg
             v-if="video.animated_poster"
-            :src="video.animated_poster.url"
-            :width="90"
-            :height="160"
+            provider="contentstack"
+            :src="video.animated_poster.filename"
+            width="90"
+            height="160"
+            fit="fill"
             :alt="video.title"
-            class="absolute w-full h-full z-10"
+            sizes="sm:400px"
+            :modifiers="{
+              assetuid: video.animated_poster.uid,
+              versionuid: getCSImageVersion(video.animated_poster),
+            }"
             loading="lazy"
             fetchpriority="auto"
+            class="absolute w-full h-full z-10"
           />
 
           <NuxtImg
-            v-if="video.poster"
-            :src="video.poster.url"
+            v-if="video && video.poster"
+            provider="contentstack"
+            :src="video.poster?.filename"
             :quality="90"
-            :width="90"
-            :height="160"
+            width="90"
+            height="160"
             fit="fill"
-            :alt="video.title"
-            sizes="sm:400px md:800px"
-            class="absolute w-full h-full z-20 thumb"
+            :alt="video?.title"
+            format="pjpg"
+            sizes="sm:400px md:800px lg:1600"
+            :modifiers="{
+              assetuid: video.poster?.uid,
+              auto: 'avif',
+              versionuid: getCSImageVersion(video.poster),
+            }"
             loading="lazy"
             fetchpriority="auto"
+            class="absolute w-full h-full z-20 thumb"
           />
 
           <USkeleton

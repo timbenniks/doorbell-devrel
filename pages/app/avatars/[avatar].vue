@@ -20,7 +20,7 @@ watch(noiseAsset, () => {
 const toast = useToast();
 async function save() {
   toast.add({ title: "Updating Avatar", icon: "i-heroicons-check-circle" });
-  const response = await $fetch("/api/cs-automate-avatar-update", {
+  await $fetch("/api/cs-automate-avatar-update", {
     method: "POST",
     body: state.value,
   });
@@ -110,79 +110,79 @@ async function save() {
               />
             </UFormGroup>
 
-            <UFormGroup
-              name="voice"
-              label="Elevenlabs Voice"
-              required
-              :ui="{ wrapper: 'mb-6' }"
-            >
-              <UInput
-                color="primary"
-                v-model="state.voice"
-                autocomplete="off"
-                size="xl"
-                placeholder="Avatar ID"
-              />
-            </UFormGroup>
-
-            <UFormGroup
-              name="voice_id"
-              label="Elevenlabs Voice ID"
-              required
-              :ui="{ wrapper: 'mb-6' }"
-            >
-              <UInput
-                color="primary"
-                v-model="state.voice_id"
-                autocomplete="off"
-                size="xl"
-                placeholder="Avatar ID"
-              />
-            </UFormGroup>
-
-            <UFormGroup
-              name="background_noise"
-              label="Background Noise"
-              :ui="{ wrapper: 'mb-6' }"
-            >
-              <UInput
-                icon="i-heroicons-folder"
-                v-model="state.background_noise"
-                autocomplete="off"
-                size="xl"
-                color="primary"
-                :ui="{ icon: { trailing: { pointer: '' } } }"
+            <div class="grid grid-cols-2 gap-6 mb-6">
+              <UFormGroup
+                name="voice"
+                label="Elevenlabs Voice"
+                required
+                :ui="{ wrapper: 'mb-6' }"
               >
-                <template #trailing>
-                  <UButton
-                    variant="link"
-                    icon="i-heroicons:cloud"
-                    :padded="false"
-                    @click="openMediaLibrary('noise')"
-                  />
-                </template>
-              </UInput>
-            </UFormGroup>
+                <UInput
+                  color="primary"
+                  v-model="state.voice"
+                  autocomplete="off"
+                  size="xl"
+                  placeholder="Avatar ID"
+                />
+              </UFormGroup>
 
-            <UFormGroup name="intro" label="Intro" :ui="{ wrapper: 'mb-6' }">
-              <UInput
-                icon="i-heroicons-folder"
-                v-model="state.intro"
-                autocomplete="off"
-                color="primary"
-                size="xl"
-                :ui="{ icon: { trailing: { pointer: '' } } }"
+              <UFormGroup
+                name="voice_id"
+                label="Elevenlabs Voice ID"
+                required
+                :ui="{ wrapper: 'mb-6' }"
               >
-                <template #trailing>
-                  <UButton
-                    variant="link"
-                    icon="i-heroicons:cloud"
-                    :padded="false"
-                    @click="openMediaLibrary('intro')"
-                  />
-                </template>
-              </UInput>
-            </UFormGroup>
+                <UInput
+                  color="primary"
+                  v-model="state.voice_id"
+                  autocomplete="off"
+                  size="xl"
+                  placeholder="Avatar ID"
+                />
+              </UFormGroup>
+            </div>
+
+            <div class="grid grid-cols-2 gap-6 mb-6">
+              <UFormGroup name="background_noise" label="Background Noise">
+                <UInput
+                  icon="i-heroicons-folder"
+                  v-model="state.background_noise"
+                  autocomplete="off"
+                  size="xl"
+                  color="primary"
+                  :ui="{ icon: { trailing: { pointer: '' } } }"
+                >
+                  <template #trailing>
+                    <UButton
+                      variant="link"
+                      icon="i-heroicons:cloud"
+                      :padded="false"
+                      @click="openMediaLibrary('noise')"
+                    />
+                  </template>
+                </UInput>
+              </UFormGroup>
+
+              <UFormGroup name="intro" label="Intro">
+                <UInput
+                  icon="i-heroicons-folder"
+                  v-model="state.intro"
+                  autocomplete="off"
+                  color="primary"
+                  size="xl"
+                  :ui="{ icon: { trailing: { pointer: '' } } }"
+                >
+                  <template #trailing>
+                    <UButton
+                      variant="link"
+                      icon="i-heroicons:cloud"
+                      :padded="false"
+                      @click="openMediaLibrary('intro')"
+                    />
+                  </template>
+                </UInput>
+              </UFormGroup>
+            </div>
 
             <UFormGroup
               name="vignette"
@@ -191,6 +191,36 @@ async function save() {
             >
               <UCheckbox v-model="state.vignette" label="Vignette" />
             </UFormGroup>
+
+            <div class="grid grid-cols-3 gap-6">
+              <UFormGroup name="width" label="Width">
+                <UInput
+                  color="primary"
+                  v-model="state.width"
+                  size="xl"
+                  placeholder="width"
+                  type="number"
+                />
+              </UFormGroup>
+              <UFormGroup name="height" label="Height">
+                <UInput
+                  color="primary"
+                  v-model="state.height"
+                  size="xl"
+                  placeholder="height"
+                  type="number"
+                />
+              </UFormGroup>
+              <UFormGroup name="scale" label="Scale">
+                <UInput
+                  color="primary"
+                  v-model="state.scale"
+                  size="xl"
+                  placeholder="scale"
+                  type="number"
+                />
+              </UFormGroup>
+            </div>
           </UForm>
           <div>
             <img

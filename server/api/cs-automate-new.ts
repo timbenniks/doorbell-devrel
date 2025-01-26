@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   await requireUserSession(event)
 
   const body = await readBody(event);
-  const { video_id, title, intro, background_noise, vignette, prompt, description } = body;
+  const { video_id, title, intro, background_noise, vignette, prompt, description, width, height } = body;
 
   await $fetch('https://eu-app.contentstack.com/automations-api/run/08e7f723473444a58d34086ae06f3e98', {
     method: 'POST',
@@ -19,7 +19,9 @@ export default defineEventHandler(async (event) => {
         "heygen_status": "processing",
         "vignette": vignette || false,
         "prompt": prompt || "",
-        "description": description || ""
+        "description": description || "",
+        "width": width || 720,
+        "height": height || 1280
       }
     },
   });

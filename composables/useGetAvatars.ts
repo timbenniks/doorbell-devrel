@@ -21,6 +21,9 @@ export function useGetAvatars() {
         "thumbnail.uid",
         "thumbnail.filename",
         "thumbnail.title",
+        "width",
+        "height",
+        "scale"
       ])
       .includeCount()
       .find();

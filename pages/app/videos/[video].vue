@@ -3,15 +3,6 @@ definePageMeta({
   middleware: "auth",
 });
 
-interface State {
-  title: string;
-  background_noise: string;
-  intro: string;
-  vignette: boolean;
-  text: string;
-  avatar_id: string;
-}
-
 const route = useRoute();
 const { data: video } = useVideoById(route.params.video as string);
 const { introAsset, noiseAsset } = useCloudinaryWidget();
@@ -35,7 +26,9 @@ const cloudinaryUrl = computed(() => {
       state.value.cloudinary_video,
       state.value.background_noise,
       state.value.vignette,
-      state.value.intro
+      state.value.intro,
+      state.value.width,
+      state.value.height
     );
   }
 
@@ -206,8 +199,9 @@ async function copyText(text: string) {
             <VideoPlayer
               v-if="state"
               :url="cloudinaryUrl"
-              :poster="state && state.poster?.url"
               class="max-w-md"
+              :width="state.width"
+              :height="state.height"
             />
           </div>
         </div>

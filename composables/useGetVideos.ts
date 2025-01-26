@@ -12,6 +12,8 @@ export function useGetVideos() {
         "duration",
         "heygen_status",
         "intro",
+        "width",
+        "height",
         "background_noise",
         "animated_poster.url",
         "animated_poster.uid",
