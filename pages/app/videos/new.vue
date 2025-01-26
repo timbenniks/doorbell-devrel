@@ -16,6 +16,7 @@ const state = reactive({
   avatar_id: "",
   prompt: "",
   elevenlabs: false,
+  voice_id: "",
 });
 
 function selectAvatar(avatar: any) {
@@ -23,6 +24,7 @@ function selectAvatar(avatar: any) {
   state.intro = avatar.intro;
   state.vignette = avatar.vignette;
   state.avatar_id = avatar.avatar_id;
+  state.voice_id = avatar.voice_id;
 }
 
 const toast = useToast();
@@ -35,6 +37,7 @@ async function create() {
       title: state.title,
       text: state.text,
       avatar_id: state.avatar_id,
+      voice_id: state.voice_id,
     },
   });
 
@@ -48,10 +51,11 @@ async function create() {
       video_id: newHeygenVideo.response.data.video_id,
       vignette: state.vignette,
       prompt: state.prompt,
+      description: state.text,
     },
   });
 
-  navigateTo("/");
+  navigateTo("/app/");
 }
 
 watch(introAsset, () => {
@@ -72,12 +76,6 @@ async function getAIToHelp(text: string) {
   });
   aiLoading.value = false;
   state.text = response.response.replace("[DONE]", "");
-}
-
-function setupElevenLabs() {
-  state.elevenlabs = true;
-  // @ts-ignore - replaceWidgetTagWithIframe is an Elevenlabs is a global function
-  setTimeout(() => window.replaceWidgetTagWithIframe(), 2000);
 }
 </script>
 
@@ -153,29 +151,6 @@ function setupElevenLabs() {
                 size="xl"
                 autoresize
               />
-
-              <template #hint>
-                <UButton
-                  variant="link"
-                  icon="i-heroicons-play"
-                  :padded="false"
-                  @click="setupElevenLabs()"
-                />
-              </template>
-            </UFormGroup>
-
-            <UFormGroup
-              name="elevenlabs"
-              label="ElevenLabs Text to Speech"
-              required
-              v-if="state.elevenlabs"
-              :ui="{ wrapper: 'mb-6' }"
-            >
-              <ElevenLabsAudioNative
-                publicUserId="df10259d19f189d866af1486f8db2459bc8d6bceab174b397b80a55972e28887"
-              >
-                {{ state.text }}
-              </ElevenLabsAudioNative>
             </UFormGroup>
 
             <UFormGroup

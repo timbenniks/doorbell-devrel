@@ -15,7 +15,7 @@ interface State {
 const route = useRoute();
 const { data: video } = useVideoById(route.params.video as string);
 const { introAsset, noiseAsset } = useCloudinaryWidget();
-import { generateCloudinaryUrl } from "../../utils/cloudinaryUrl";
+import { generateCloudinaryUrl } from "../../../utils/cloudinaryUrl";
 
 const state = reactive(video);
 
@@ -82,7 +82,7 @@ async function copyText(text: string) {
             :loading="false"
             icon="i-heroicons-share"
             size="md"
-            :to="`/videos/share/${state && state.uid}`"
+            :to="`/app/videos/share/${state && state.uid}`"
           >
             Share
           </UButton>
@@ -104,6 +104,32 @@ async function copyText(text: string) {
                 autocomplete="off"
                 size="xl"
                 placeholder="Video title"
+                disabled
+              />
+            </UFormGroup>
+
+            <UFormGroup
+              v-if="state.description"
+              name="description"
+              label="Script"
+              :ui="{ wrapper: 'mb-6' }"
+            >
+              <UTextarea v-model="state.description" size="xl" disabled />
+            </UFormGroup>
+
+            <UFormGroup
+              v-if="state.prompt"
+              name="prompt"
+              label="Prompt"
+              required
+              :ui="{ wrapper: 'mb-6' }"
+            >
+              <UInput
+                color="primary"
+                v-model="state.prompt"
+                autocomplete="off"
+                size="xl"
+                placeholder="Prompt"
                 disabled
               />
             </UFormGroup>

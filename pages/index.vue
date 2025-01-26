@@ -1,64 +1,28 @@
 <script setup lang="ts">
 definePageMeta({
-  middleware: "auth",
+  layout: "site",
 });
 
-const {
-  data: videos,
-  refresh: refreshVideos,
-  status: videosStatus,
-} = useGetVideos();
-
-const listRefreshing = ref(false);
-
-async function refreshList() {
-  listRefreshing.value = true;
-  await refreshVideos();
-  listRefreshing.value = false;
-}
+const { data: page } = await useGetPage({
+  contentTypeUid: "page",
+  url: "/",
+  referenceFieldPath: [
+    "components.list.items.video",
+    "components.list.items.avatar",
+  ],
+  locale: "en-us",
+  replaceHtmlCslp: true,
+});
 </script>
 
 <template>
-  <UDashboardPage>
-    <UDashboardPanel grow>
-      <UDashboardNavbar title="Videos" />
+  <AppHeader />
+  <ComponentList v-if="page" :page="page" />
+  <AppFooter />
 
-      <UDashboardToolbar>
-        <template #left>
-          <UButton
-            :loading="listRefreshing"
-            icon="i-heroicons-arrow-path-20-solid"
-            size="md"
-            @click="refreshList()"
-          >
-            Refresh list
-          </UButton>
-          <UButton icon="i-heroicons-play" size="md" to="/videos/new"
-            >New Video</UButton
-          >
-        </template>
-      </UDashboardToolbar>
-
-      <UDashboardPanelContent>
-        <p v-if="videos?.length === 0 && videosStatus === 'success'">
-          No videos yet...
-
-          <ULink
-            to="/videos/new"
-            active-class="text-primary"
-            inactive-class="text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
-          >
-            Create one here.
-          </ULink>
-        </p>
-        <VideosList v-else :data="videos" />
-      </UDashboardPanelContent>
-    </UDashboardPanel>
-  </UDashboardPage>
+  <!-- <Hero />
+  <TextImage />
+  <List />
+  <Grid />
+   -->
 </template>
-
-<style>
-.blogpost:hover .thumb {
-  opacity: 0;
-}
-</style>

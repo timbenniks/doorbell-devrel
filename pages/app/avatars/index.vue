@@ -13,14 +13,14 @@ const { data: avatars } = useGetAvatars();
 
       <UDashboardToolbar>
         <template #left>
-          <UButton icon="i-heroicons-user" size="md" to="/avatars/new"
+          <UButton icon="i-heroicons-user" size="md" to="/app/avatars/new"
             >New Avatar</UButton
           >
           <UButton
             :loading="false"
             icon="i-heroicons-play"
             size="md"
-            to="/videos/new"
+            to="/app/videos/new"
           >
             New Video
           </UButton>
@@ -35,7 +35,7 @@ const { data: avatars } = useGetAvatars();
             :key="avatar.uid"
             orientation="vertical"
             :description="`Voice: ${avatar.voice}`"
-            :to="`/avatars/${avatar.uid}`"
+            :to="`/app/avatars/${avatar.uid}`"
             :title="avatar.avatar"
             :image="avatar.thumbnail.url"
             :ui="{

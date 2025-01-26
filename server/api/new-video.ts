@@ -2,7 +2,7 @@ export default defineEventHandler(async (event) => {
   await requireUserSession(event)
 
   const body = await readBody(event);
-  const { title, text, avatar_id } = body;
+  const { title, text, avatar_id, voice_id } = body;
 
   if (!title || !text) {
     return {
@@ -10,7 +10,7 @@ export default defineEventHandler(async (event) => {
     };
   }
 
-  const { heyGenApiKey, heyGenVoiceId } = useRuntimeConfig().public
+  const { heyGenApiKey } = useRuntimeConfig().public
 
   const response = await $fetch('https://api.heygen.com/v2/video/generate', {
     method: 'POST',
@@ -36,7 +36,7 @@ export default defineEventHandler(async (event) => {
           },
           voice: {
             type: "text",
-            voice_id: heyGenVoiceId,
+            voice_id: voice_id,
             input_text: text,
           }
         },

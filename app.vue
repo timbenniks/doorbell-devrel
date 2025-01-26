@@ -18,7 +18,7 @@ useHead({
 });
 
 const title = "Doorbell DevRel";
-const description = "Doorbell DevRel Dashboard";
+const description = "Doorbell DevRel";
 
 useSeoMeta({
   title,
@@ -29,20 +29,11 @@ useSeoMeta({
 </script>
 
 <template>
-  <Head>
-    <Script
-      src="https://media-library.cloudinary.com/global/all.js"
-      async
-    ></Script>
-  </Head>
   <div>
     <NuxtLoadingIndicator />
 
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
-
-    <UNotifications />
-    <UModals />
   </div>
 </template>

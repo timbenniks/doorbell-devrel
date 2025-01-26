@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import contentstack, { Region } from "@contentstack/delivery-sdk";
-import { generateCloudinaryUrl } from "../../../utils/cloudinaryUrl";
+import { generateCloudinaryUrl } from "../../../../utils/cloudinaryUrl";
 import { useShare } from "@vueuse/core";
 import { isClient } from "@vueuse/shared";
 

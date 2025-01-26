@@ -55,7 +55,7 @@ async function save() {
             :loading="false"
             icon="i-heroicons-play"
             size="md"
-            to="/videos/new"
+            to="/app/videos/new"
           >
             New Video
           </UButton>

@@ -11,14 +11,14 @@ export default defineNuxtConfig({
   ],
 
   routeRules: {
-    '/': { ssr: false },
-    '/avatars': { ssr: false },
-    '/avatars/*': { ssr: false },
-    '/videos/*': { ssr: false },
-    "/videos/share/*": { ssr: true },
-    "/videos": {
+    '/app/': { ssr: false },
+    '/app/avatars': { ssr: false },
+    '/app/avatars/*': { ssr: false },
+    '/app/videos/*': { ssr: false },
+    "/app/videos/share/*": { ssr: true },
+    "/app/videos": {
       redirect: {
-        to: "/",
+        to: "/app/",
         statusCode: 308,
       },
     },
@@ -39,8 +39,10 @@ export default defineNuxtConfig({
     public: {
       apiKey: process.env.NUXT_CONTENTSTACK_API_KEY,
       deliveryToken: process.env.NUXT_CONTENTSTACK_DELIVERY_TOKEN,
+      previewToken: process.env.NUXT_CONTENTSTACK_PREVIEW_TOKEN,
       environment: process.env.NUXT_CONTENTSTACK_ENVIRONMENT,
-      assetHost: 'eu-assets.contentstack.com/v3/assets',
+      assetHost: process.env.NUXT_CONTENTSTACK_ASSET_HOST || 'eu-images.contentstack.com/v3/assets',
+      preview: process.env.NUXT_CONTENTSTACK_PREVIEW === "true",
       cloudinaryApiKey: process.env.NUXT_CLOUDINARY_API_KEY,
       cloudinaryCloudname: process.env.NUXT_CLOUDINARY_CLOUD_NAME,
       cloudinaryFolder: process.env.NUXT_CLOUDINARY_FOLDER,
@@ -59,7 +61,7 @@ export default defineNuxtConfig({
         name: "contentstack",
         provider: "~/providers/contentstack",
         options: {
-          baseURL: 'https://eu-assets.contentstack.com/v3/assets',
+          baseURL: `https://${process.env.NUXT_CONTENTSTACK_ASSET_HOST}` || 'https://eu-images.contentstack.com/v3/assets',
           apiKey: process.env.NUXT_CONTENTSTACK_API_KEY
         }
       },

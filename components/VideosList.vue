@@ -33,7 +33,7 @@ function getCSImageVersion(thumbnail: any) {
     <UBlogPost
       class="blogpost"
       v-for="video in data"
-      :to="`/videos/${video.uid}`"
+      :to="`/app/videos/${video.uid}`"
       :key="video.video_id"
       :title="video.title"
       :date="
