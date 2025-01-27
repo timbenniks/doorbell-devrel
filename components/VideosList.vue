@@ -70,9 +70,8 @@ defineProps<{
           />
 
           <NuxtImg
-            v-if="video && video.poster"
-            provider="contentstack"
-            :src="video.poster?.filename"
+            v-if="video.poster?.url"
+            :src="video.poster?.url"
             :quality="90"
             width="90"
             height="160"
@@ -80,14 +79,9 @@ defineProps<{
             :alt="video?.title"
             format="pjpg"
             sizes="sm:400px md:800px lg:1600"
-            :modifiers="{
-              assetuid: video.poster?.uid,
-              auto: 'avif',
-              versionuid: getCSImageVersion(video.poster),
-            }"
             loading="lazy"
             fetchpriority="auto"
-            class="absolute w-full h-full z-20 thumb"
+            class="absolute w-full h-full z-20 thumb aspect-[9/16] object-cover"
           />
 
           <USkeleton

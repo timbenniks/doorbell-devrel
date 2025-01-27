@@ -61,7 +61,7 @@ export default defineNuxtConfig({
         name: "contentstack",
         provider: "~/providers/contentstack",
         options: {
-          baseURL: `https://${process.env.NUXT_CONTENTSTACK_ASSET_HOST}` || 'https://eu-images.contentstack.com/v3/assets',
+          baseURL: `https://${process.env.NUXT_CONTENTSTACK_ASSET_HOST}`,
           apiKey: process.env.NUXT_CONTENTSTACK_API_KEY
         }
       },
