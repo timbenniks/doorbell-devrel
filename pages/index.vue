@@ -22,7 +22,6 @@ const { data: page } = await useGetPage({
 
   <!-- <Hero />
   <TextImage />
-  <List />
-  <Grid />
-   -->
+  <List />  
+  <Grid /> -->
 </template>

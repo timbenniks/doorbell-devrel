@@ -3,6 +3,7 @@ import type { Component } from "vue";
 
 import NoComponent from "./NoComponent.vue";
 import hero from "./Hero.vue";
+import grid from "./Grid.vue";
 import landing_section from "./LandingSection.vue";
 
 type Mapping = {
@@ -12,6 +13,7 @@ type Mapping = {
 const mapping: Mapping = {
   hero,
   landing_section,
+  grid,
 };
 
 function getComponentForName(name: string) {

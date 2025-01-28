@@ -5,16 +5,7 @@ const links = computed(() => [
     to: "#about",
     icon: "i-heroicons-cube-transparent",
   },
-  {
-    label: "Pricing",
-    to: "#pricing",
-    icon: "i-heroicons-credit-card",
-  },
-  {
-    label: "Testimonials",
-    to: "#testimonials",
-    icon: "i-heroicons-academic-cap",
-  },
+
   {
     label: "FAQ",
     to: "#faq",

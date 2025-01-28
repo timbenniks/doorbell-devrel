@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { getCSImageVersion } from "@/utils/getCSImageVersion";
 
-defineProps({
+const props = defineProps({
   title: {
     type: String,
   },
@@ -17,15 +17,31 @@ defineProps({
   orientation: {
     type: String,
   },
+  links: {
+    type: Object,
+  },
   cslp: {
     type: Object,
   },
+});
+
+const computedlinks = computed(() => {
+  return props?.links.map((link: any) => {
+    return {
+      label: link.link.label,
+      icon: link.link.icon,
+      color: link.link.color,
+      to: link.link.link.href,
+      size: "xl",
+    };
+  });
 });
 </script>
 
 <template>
   <ULandingHero
     :orientation="orientation as 'vertical' | 'horizontal' | undefined"
+    :links="computedlinks"
   >
     <template #headline>
       <UBadge
@@ -34,13 +50,13 @@ defineProps({
         size="lg"
         class="relative rounded-full font-semibold"
       >
-        <span v-bind="cslp?.headline">{{ headline }}</span>
+        <span v-bind="cslp && cslp?.headline">{{ headline }}</span>
       </UBadge>
     </template>
 
     <template #title>
       <h1
-        v-bind="cslp?.title"
+        v-bind="cslp && cslp?.title"
         class="text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-7xl"
       >
         {{ title }}
@@ -49,16 +65,28 @@ defineProps({
 
     <template #description>
       <p
-        v-bind="cslp?.description"
+        v-bind="cslp && cslp?.description"
         class="mt-6 text-lg tracking-tight text-gray-600 dark:text-gray-300"
       >
         {{ description }}
       </p>
     </template>
 
+    <template #links>
+      <div class="flex space-x-4 mt-8" v-bind="cslp && cslp?.links">
+        <UButton
+          v-for="(link, index) in computedlinks"
+          :key="index"
+          v-bind="link"
+          class="flex items-center space-x-2"
+          :data-cslp="cslp && cslp[`links__${index}`]['data-cslp']"
+        />
+      </div>
+    </template>
+
     <NuxtImg
       v-if="image?.url"
-      v-bind="cslp?.image"
+      v-bind="cslp && cslp?.image"
       provider="contentstack"
       :src="image.filename"
       :quality="90"

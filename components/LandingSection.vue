@@ -27,7 +27,12 @@ defineProps({
 </script>
 
 <template>
-  <ULandingSection :title="title" :description="description" :align="align">
+  <ULandingSection
+    :title="title"
+    :description="description"
+    :align="align"
+    :headline="headline"
+  >
     <NuxtImg
       v-if="image?.url"
       v-bind="cslp?.image"
