@@ -1,7 +1,7 @@
 <script lang="ts" setup>
 import { getCSImageVersion } from "@/utils/getCSImageVersion";
 
-defineProps({
+const props = defineProps({
   title: {
     type: String,
   },
@@ -20,19 +20,60 @@ defineProps({
   image: {
     type: Object,
   },
+  features: {
+    type: Array,
+  },
   cslp: {
     type: Object,
   },
 });
+
+const computedFeatures = computed(() => {
+  return props?.features.map((feature: any) => {
+    const { icon, name, description, cslp } = feature.feature;
+
+    return {
+      icon,
+      name,
+      description,
+      cslp,
+    };
+  });
+});
 </script>
 
 <template>
-  <ULandingSection
-    :title="title"
-    :description="description"
-    :align="align"
-    :headline="headline"
-  >
+  <ULandingSection :align="align" :features="computedFeatures">
+    <template #headline>
+      <p
+        v-if="headline"
+        class="block text-base/7 font-semibold text-primary"
+        v-bind="cslp && cslp?.headline"
+      >
+        {{ headline }}
+      </p>
+    </template>
+
+    <template #title>
+      <h3
+        v-bind="cslp && cslp?.title"
+        class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl lg:text-5xl"
+        v-if="title"
+      >
+        {{ title }}
+      </h3>
+    </template>
+
+    <template #description>
+      <p
+        v-if="description"
+        class="text-lg/8 text-gray-600 dark:text-gray-300"
+        v-bind="cslp && cslp?.description"
+      >
+        {{ description }}
+      </p>
+    </template>
+
     <NuxtImg
       v-if="image?.url"
       v-bind="cslp?.image"
