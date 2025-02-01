@@ -37,3 +37,19 @@ useSeoMeta({
     </NuxtLayout>
   </div>
 </template>
+
+<style>
+.visual-builder__empty-block {
+  border: 2px dashed #e879f9;
+  background-color: rgba(232, 121, 249, 0.2);
+  padding: 0.5rem !important;
+  align-items: start !important;
+  justify-content: start !important;
+  gap: 0.5rem !important;
+  min-height: fit-content !important;
+}
+
+.visual-builder__empty-block-title {
+  color: #fff !important;
+}
+</style>

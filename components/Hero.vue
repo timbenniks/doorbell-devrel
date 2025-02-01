@@ -20,6 +20,12 @@ const props = defineProps({
   links: {
     type: Object,
   },
+  no_image: {
+    type: Boolean,
+  },
+  no_links: {
+    type: Boolean,
+  },
   cslp: {
     type: Object,
   },
@@ -73,7 +79,12 @@ const computedlinks = computed(() => {
     </template>
 
     <template #links>
-      <div class="flex space-x-4 mt-8" v-bind="cslp && cslp?.links">
+      <div
+        class="flex space-x-4 mt-8"
+        v-if="!no_links"
+        v-bind="cslp && cslp?.links"
+        :class="links?.length === 0 ? 'visual-builder__empty-block-parent' : ''"
+      >
         <UButton
           v-for="(link, index) in computedlinks"
           :key="index"
@@ -85,7 +96,7 @@ const computedlinks = computed(() => {
     </template>
 
     <NuxtImg
-      v-if="image?.url"
+      v-if="image?.url && !no_image"
       v-bind="cslp && cslp?.image"
       provider="contentstack"
       :src="image.filename"
@@ -104,6 +115,11 @@ const computedlinks = computed(() => {
       loading="eager"
       fetchpriority="high"
       class="rounded-lg"
+    />
+
+    <ImagePlaceholder
+      v-if="!image?.url && !no_image"
+      v-bind="cslp && cslp?.image"
     />
   </ULandingHero>
 </template>
