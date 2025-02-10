@@ -43,7 +43,13 @@ const computedFeatures = computed(() => {
 </script>
 
 <template>
-  <ULandingSection :align="align" :features="computedFeatures">
+  <ULandingSection
+    :align="align"
+    :features="computedFeatures"
+    :ui="{
+      wrapper: 'py-12 sm:py-16',
+    }"
+  >
     <template #headline>
       <p
         v-if="headline"

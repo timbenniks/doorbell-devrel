@@ -48,6 +48,9 @@ const computedlinks = computed(() => {
   <ULandingHero
     :orientation="orientation as 'vertical' | 'horizontal' | undefined"
     :links="computedlinks"
+    :ui="{
+      wrapper: 'py-12 sm:py-16 md:py-20',
+    }"
   >
     <template #headline>
       <UBadge

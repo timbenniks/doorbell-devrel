@@ -31,7 +31,12 @@ const computedGrid = computed(() => {
 </script>
 
 <template>
-  <ULandingSection :description="description">
+  <ULandingSection
+    :description="description"
+    :ui="{
+      wrapper: 'py-12 sm:py-16',
+    }"
+  >
     <template #headline>
       <p
         v-if="headline"
@@ -62,6 +67,7 @@ const computedGrid = computed(() => {
       </p>
     </template>
     <UPageGrid
+      v-if="computedGrid.length > 0"
       id="about"
       class="scroll-mt-[calc(var(--header-height)+140px+128px+96px)]"
       v-bind="cslp && cslp.grid"
