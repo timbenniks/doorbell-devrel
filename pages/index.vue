@@ -16,7 +16,11 @@ const { data: page } = await useGetPage({
 </script>
 
 <template>
-  <AppHeader v-if="page" :navigation="page.navigation" />
+  <AppHeader
+    v-if="page"
+    :navigation="page.navigation"
+    v-bind="page.cslp && page.cslp?.navigation"
+  />
   <ComponentList v-if="page" :page="page" />
   <AppFooter />
 </template>
