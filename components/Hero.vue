@@ -26,6 +26,9 @@ const props = defineProps({
   no_links: {
     type: Boolean,
   },
+  navigation_id: {
+    type: String,
+  },
   cslp: {
     type: Object,
   },
@@ -46,6 +49,7 @@ const computedlinks = computed(() => {
 
 <template>
   <ULandingHero
+    :id="navigation_id"
     :orientation="orientation as 'vertical' | 'horizontal' | undefined"
     :links="computedlinks"
     :ui="{

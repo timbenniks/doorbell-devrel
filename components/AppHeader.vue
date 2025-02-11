@@ -1,19 +1,18 @@
 <script setup lang="ts">
-const links = computed(() => [
-  {
-    label: "About",
-    to: "#about",
-    icon: "i-heroicons-cube-transparent",
-  },
-
-  {
-    label: "FAQ",
-    to: "#faq",
-    icon: "i-heroicons-question-mark-circle",
-  },
-]);
-
 const NuxtImg = resolveComponent("NuxtImg");
+
+const props = defineProps({
+  navigation: {
+    type: Array,
+  },
+});
+
+const links = computed(() => {
+  return props.navigation.map((item) => ({
+    label: item.link.title,
+    to: item.link.id_on_page,
+  }));
+});
 </script>
 
 <template>

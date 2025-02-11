@@ -6,7 +6,7 @@ defineProps({
   title: {
     type: String,
   },
-  description: {
+  rich_description: {
     type: String,
   },
   headline: {
@@ -19,6 +19,9 @@ defineProps({
   items: {
     type: Array,
   },
+  navigation_id: {
+    type: String,
+  },
   cslp: {
     type: Object,
   },
@@ -27,6 +30,7 @@ defineProps({
 
 <template>
   <ULandingSection
+    :id="navigation_id"
     :ui="{
       wrapper: 'py-12 sm:py-16',
     }"
@@ -52,13 +56,12 @@ defineProps({
     </template>
 
     <template #description>
-      <p
-        v-if="description"
-        class="text-lg/8 text-gray-600 dark:text-gray-300"
-        v-bind="cslp && cslp?.description"
-      >
-        {{ description }}
-      </p>
+      <div
+        v-if="rich_description"
+        class="text-lg/8 text-gray-600 dark:text-gray-300 prose"
+        v-bind="cslp && cslp?.rich_description"
+        v-html="rich_description"
+      />
     </template>
 
     <UBlogList

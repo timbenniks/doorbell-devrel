@@ -52,4 +52,8 @@ useSeoMeta({
 .visual-builder__empty-block-title {
   color: #fff !important;
 }
+
+html {
+  scroll-behavior: smooth;
+}
 </style>

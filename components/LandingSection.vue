@@ -5,7 +5,7 @@ const props = defineProps({
   title: {
     type: String,
   },
-  description: {
+  rich_description: {
     type: String,
   },
   headline: {
@@ -22,6 +22,9 @@ const props = defineProps({
   },
   features: {
     type: Array,
+  },
+  navigation_id: {
+    type: String,
   },
   cslp: {
     type: Object,
@@ -44,6 +47,7 @@ const computedFeatures = computed(() => {
 
 <template>
   <ULandingSection
+    :id="navigation_id"
     :align="align"
     :features="computedFeatures"
     :ui="{
@@ -71,13 +75,12 @@ const computedFeatures = computed(() => {
     </template>
 
     <template #description>
-      <p
-        v-if="description"
-        class="text-lg/8 text-gray-600 dark:text-gray-300"
-        v-bind="cslp && cslp?.description"
-      >
-        {{ description }}
-      </p>
+      <div
+        v-if="rich_description"
+        class="text-lg/8 text-gray-600 dark:text-gray-300 prose"
+        v-bind="cslp && cslp?.rich_description"
+        v-html="rich_description"
+      />
     </template>
 
     <NuxtImg
