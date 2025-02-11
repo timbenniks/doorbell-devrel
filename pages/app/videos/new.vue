@@ -237,7 +237,7 @@ async function getAIToHelp(text: string) {
                   image: {
                     wrapper: `ring-4 ${
                       state.avatar_id === avatar.avatar_id
-                        ? 'ring-fuchsia-900 dark:ring-fuchsia-900 opacity-100'
+                        ? 'ring-blue-900 dark:ring-blue-900 opacity-100'
                         : 'ring-gray-200 dark:ring-gray-800 opacity-60'
                     }  relative overflow-hidden aspect-[9/16] w-full rounded-lg pointer-events-none`,
                   },

@@ -13,6 +13,12 @@ const { data: page } = await useGetPage({
   locale: "en-us",
   replaceHtmlCslp: true,
 });
+
+useSeoMeta({
+  description: page.value?.meta?.description,
+  title: page.value?.meta.title,
+  ogImage: page.value?.meta?.image.url,
+});
 </script>
 
 <template>
@@ -21,6 +27,7 @@ const { data: page } = await useGetPage({
     :navigation="page.navigation"
     v-bind="page.cslp && page.cslp?.navigation"
   />
+
   <ComponentList v-if="page" :page="page" />
   <AppFooter />
 </template>

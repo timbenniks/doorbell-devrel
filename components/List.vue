@@ -82,7 +82,7 @@ defineProps({
         :title="video.title"
         :badge="{
           label: 'Doorbell DevRel',
-          color: 'indigo',
+          color: 'blue',
         }"
         :date="
           video.created_at &&
@@ -97,7 +97,9 @@ defineProps({
           {
             name: 'Tim Benniks',
             avatar: {
-              src: 'https://avatars.githubusercontent.com/u/121096?v=4',
+              src: 'https://res.cloudinary.com/dwfcofnrd/image/fetch/f_auto,q_auto/w_60,h_60/https://avatars.githubusercontent.com/u/121096?v=4',
+              alt: 'Tim Benniks',
+              loading: 'lazy',
             },
           },
         ]"

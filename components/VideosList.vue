@@ -40,7 +40,7 @@ defineProps<{
       ]"
       :badge="{
         label: video.heygen_status,
-        color: video.heygen_status === 'processing' ? 'red' : 'indigo',
+        color: video.heygen_status === 'processing' ? 'red' : 'blue',
       }"
       :ui="{
         image: {
