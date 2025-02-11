@@ -1,82 +1,135 @@
 <script lang="ts" setup>
-const items = ref([
-  {
-    title: "Easy to use",
-    description:
-      "Id laborum laboris duis nostrud excepteur ut velit nulla magna Lorem proident non.",
-    icon: "i-heroicons-cog",
+import { formatInTimeZone } from "date-fns-tz";
+import { getCSImageVersion } from "@/utils/getCSImageVersion";
+
+defineProps({
+  title: {
+    type: String,
   },
-  {
-    title: "Reliable",
-    description:
-      "Magna Lorem ex cillum fugiat ad enim aute irure sit duis minim.",
-    icon: "i-heroicons-check",
+  description: {
+    type: String,
   },
-  {
-    title: "Secure",
-    description:
-      "Proident nostrud excepteur sint ut culpa consectetur aute adipisicing non anim ullamco.",
-    image: "i-heroicons-lock-closed",
+  headline: {
+    type: String,
   },
-  {
-    title: "Fast",
-    description:
-      "Qui reprehenderit nostrud dolore nisi ad fugiat labore eiusmod sint aliquip nisi voluptate.",
-    image: "i-heroicons-rocket-launch",
+  orientation: {
+    type: String,
+    default: "horizontal",
   },
-  {
-    title: "Affordable",
-    description: "Reprehenderit fugiat elit in do ipsum ut pariatur.",
-    image: "i-heroicons-currency-dollar",
+  items: {
+    type: Array,
   },
-  {
-    title: "Scalable",
-    description:
-      "Lorem deserunt et eiusmod. Ea in consectetur minim officia ullamco enim deserunt est.",
-    image: "i-heroicons-chart-bar",
+  cslp: {
+    type: Object,
   },
-]);
+});
 </script>
 
 <template>
   <ULandingSection
-    title="page.features.title"
-    description="page.features.description"
-    headline="page.features.headline"
+    :ui="{
+      wrapper: 'py-12 sm:py-16',
+    }"
   >
-    <UBlogList orientation="horizontal">
+    <template #headline>
+      <p
+        v-if="headline"
+        class="block text-base/7 font-semibold text-primary"
+        v-bind="cslp && cslp?.headline"
+      >
+        {{ headline }}
+      </p>
+    </template>
+
+    <template #title>
+      <h3
+        v-bind="cslp && cslp?.title"
+        class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl lg:text-5xl"
+        v-if="title"
+      >
+        {{ title }}
+      </h3>
+    </template>
+
+    <template #description>
+      <p
+        v-if="description"
+        class="text-lg/8 text-gray-600 dark:text-gray-300"
+        v-bind="cslp && cslp?.description"
+      >
+        {{ description }}
+      </p>
+    </template>
+
+    <UBlogList
+      :orientation="orientation"
+      :ui="{
+        wrapper:
+          'flex flex-col lg:grid grid-cols-1 lg:grid-cols-4 gap-x-8 gap-y-16',
+      }"
+      v-bind="cslp && cslp.items"
+    >
       <UBlogPost
-        title="Nuxt 3.9"
-        description="Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more."
-        date="Dec 25, 2023"
+        v-bind="cslp && cslp?.description"
+        class="blogpost"
+        v-for="(video, index) in items"
+        :data-cslp="cslp && cslp[`items__${index}`]['data-cslp']"
+        :to="`/app/videos/share/${video.uid}`"
+        :key="video.video_id"
+        :title="video.title"
+        :badge="{
+          label: 'Doorbell DevRel',
+          color: 'indigo',
+        }"
+        :date="
+          video.created_at &&
+          formatInTimeZone(
+            video.created_at,
+            'Europe/Berlin',
+            `MMM d, yyyy 'at' HH:mm`
+          )
+        "
         orientation="vertical"
-        :image="{ src: 'https://picsum.photos/640/360', alt: 'Nuxt 3.9' }"
         :authors="[
           {
-            name: 'Daniel Roe',
-            avatar: { src: 'https://github.com/danielroe.png' },
-            to: 'https://twitter.com/danielcroe',
-            target: '_blank',
+            name: 'Tim Benniks',
+            avatar: {
+              src: 'https://avatars.githubusercontent.com/u/121096?v=4',
+            },
           },
         ]"
-        :badge="{ label: 'Release' }"
-      />
-      <UBlogPost
-        title="Nuxt 3.9"
-        description="Nuxt 3.9 is out - a Christmas gift from the Nuxt team bringing Vite 5, interactive server components, new composables, a new loading API and more."
-        date="Dec 25, 2023"
-        orientation="vertical"
-        :image="{ src: 'https://picsum.photos/640/360', alt: 'Nuxt 3.9' }"
-        :authors="[
-          {
-            name: 'Daniel Roe',
-            avatar: { src: 'https://github.com/danielroe.png' },
-            to: 'https://twitter.com/danielcroe',
-            target: '_blank',
+        :ui="{
+          image: {
+            wrapper:
+              'ring-1 ring-gray-200 dark:ring-gray-800 relative overflow-hidden aspect-[9/16] w-full rounded-lg pointer-events-none',
           },
-        ]"
-        :badge="{ label: 'Release' }"
-      />
+        }"
+      >
+        <template #image>
+          <div class="relative w-full h-full">
+            <NuxtImg
+              v-if="video.poster?.url"
+              provider="contentstack"
+              :src="video.poster.filename"
+              :quality="90"
+              width="90"
+              height="160"
+              fit="fill"
+              :alt="video.title"
+              format="pjpg"
+              sizes="sm:400px"
+              :modifiers="{
+                assetuid: video.poster.uid,
+                auto: 'avif',
+                versionuid: getCSImageVersion(video.poster),
+              }"
+              loading="lazy"
+              fetchpriority="auto"
+              class="rounded-lg w-full block"
+            />
+          </div>
+        </template>
+      </UBlogPost>
     </UBlogList>
   </ULandingSection>
 </template>

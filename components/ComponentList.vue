@@ -5,6 +5,7 @@ import NoComponent from "./NoComponent.vue";
 import hero from "./Hero.vue";
 import grid from "./Grid.vue";
 import landing_section from "./LandingSection.vue";
+import list from "./List.vue";
 
 type Mapping = {
   [name: string]: Component;
@@ -14,6 +15,7 @@ const mapping: Mapping = {
   hero,
   landing_section,
   grid,
+  list,
 };
 
 function getComponentForName(name: string) {

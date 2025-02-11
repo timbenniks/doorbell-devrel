@@ -11,6 +11,9 @@ export default defineNuxtConfig({
   ],
 
   routeRules: {
+    '/': {
+      static: true
+    },
     '/app/': { ssr: false },
     '/app/avatars': { ssr: false },
     '/app/avatars/*': { ssr: false },

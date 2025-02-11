@@ -19,9 +19,4 @@ const { data: page } = await useGetPage({
   <AppHeader />
   <ComponentList v-if="page" :page="page" />
   <AppFooter />
-
-  <!-- <Hero />
-  <TextImage />
-  <List />  
-  <Grid /> -->
 </template>
