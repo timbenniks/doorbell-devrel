@@ -24,7 +24,8 @@ const links = computed(() => {
           sizes="sm:60px"
           src="/logo.png"
           size="lg"
-          alt="Doorbell DevRel"
+          loading="eager"
+          alt="Logo of the Doorbell DevRel by Tim Benniks"
         />
 
         <span>Doorbell DevRel</span>

@@ -75,7 +75,7 @@ function startShare() {
       v-if="cloudinaryUrl"
       :url="cloudinaryUrl"
       poster=""
-      class="max-w-lg"
+      class="max-w-lg aspect-w-9 aspect-h-16"
     />
   </UCard>
 </template>

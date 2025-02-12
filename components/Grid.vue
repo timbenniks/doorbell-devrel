@@ -55,13 +55,10 @@ const computedGrid = computed(() => {
     </template>
 
     <template #title>
-      <h3
-        v-bind="cslp && cslp?.title"
-        class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl lg:text-5xl"
-        v-if="title"
-      >
-        {{ title }}
-      </h3>
+      <template v-if="cslp">
+        <span v-bind="cslp && cslp?.title">{{ title }}</span>
+      </template>
+      <template v-else>{{ title }}</template>
     </template>
 
     <template #description>
@@ -85,13 +82,10 @@ const computedGrid = computed(() => {
         :data-cslp="cslp && cslp[`grid__${index}`]['data-cslp']"
       >
         <template #title>
-          <p
-            v-bind="item.cslp && item.cslp.title"
-            :name="item.title"
-            class="text-gray-900 dark:text-white text-base font-bold truncate"
-          >
-            {{ item.title }}
-          </p>
+          <template v-if="item.cslp">
+            <span v-bind="item.cslp && item.cslp.title">{{ item.title }}</span>
+          </template>
+          <template v-else>{{ item.title }}</template>
         </template>
 
         <template #description>

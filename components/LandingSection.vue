@@ -65,13 +65,10 @@ const computedFeatures = computed(() => {
     </template>
 
     <template #title>
-      <h3
-        v-bind="cslp && cslp?.title"
-        class="text-3xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-4xl lg:text-5xl"
-        v-if="title"
-      >
-        {{ title }}
-      </h3>
+      <template v-if="cslp">
+        <span v-bind="cslp && cslp?.title">{{ title }}</span>
+      </template>
+      <template v-else>{{ title }}</template>
     </template>
 
     <template #description>

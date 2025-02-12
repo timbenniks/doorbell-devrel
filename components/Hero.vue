@@ -68,12 +68,10 @@ const computedlinks = computed(() => {
     </template>
 
     <template #title>
-      <h1
-        v-bind="cslp && cslp?.title"
-        class="text-5xl font-bold tracking-tight text-gray-900 dark:text-white sm:text-7xl"
-      >
-        {{ title }}
-      </h1>
+      <template v-if="cslp">
+        <span v-bind="cslp && cslp?.title">{{ title }}</span>
+      </template>
+      <template v-else>{{ title }}</template>
     </template>
 
     <template #description>

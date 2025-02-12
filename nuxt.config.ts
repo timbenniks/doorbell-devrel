@@ -11,9 +11,6 @@ export default defineNuxtConfig({
   ],
 
   routeRules: {
-    '/': {
-      static: true
-    },
     '/app/': { ssr: false },
     '/app/avatars': { ssr: false },
     '/app/avatars/*': { ssr: false },
@@ -55,7 +52,12 @@ export default defineNuxtConfig({
   },
 
   ui: {
-    global: true
+    global: true,
+    safelistColors: ['brand-primary']
+  },
+
+  colorMode: {
+    preference: 'dark'
   },
 
   image: {
