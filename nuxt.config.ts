@@ -11,6 +11,7 @@ export default defineNuxtConfig({
   ],
 
   routeRules: {
+    '/': { prerender: true, swr: true },
     '/app/': { ssr: false },
     '/app/avatars': { ssr: false },
     '/app/avatars/*': { ssr: false },
@@ -22,6 +23,11 @@ export default defineNuxtConfig({
         statusCode: 308,
       },
     },
+  },
+
+  features: {
+    noScripts: false,
+    inlineStyles: true,
   },
 
   fonts: {
