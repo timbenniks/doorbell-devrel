@@ -1,6 +1,5 @@
 <script lang="ts" setup>
 import { formatInTimeZone } from "date-fns-tz";
-import { getCSImageVersion } from "@/utils/getCSImageVersion";
 
 defineProps({
   title: {
@@ -117,7 +116,7 @@ defineProps({
               height="160"
               fit="fill"
               :alt="video.title"
-              sizes="sm:100vw md:300px lg:500px"
+              sizes="280px"
               loading="lazy"
               class="rounded-lg w-full block"
               densities="x1"
