@@ -61,6 +61,9 @@ export default defineNuxtConfig({
   },
 
   image: {
+    cloudinary: {
+      baseURL: 'https://res.cloudinary.com/dwfcofnrd/image/fetch/'
+    },
     providers: {
       contentstack: {
         name: "contentstack",

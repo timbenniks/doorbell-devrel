@@ -103,23 +103,16 @@ const computedlinks = computed(() => {
     <NuxtImg
       v-if="image?.url && !no_image"
       v-bind="cslp && cslp?.image"
-      provider="contentstack"
-      :src="image.filename"
-      :quality="90"
+      provider="cloudinary"
+      :src="image.url"
       width="1577"
       height="795"
-      fit="fill"
       alt="The Doorbell DevRel"
-      format="pjpg"
-      sizes="sm:400px md:800px lg:1600"
-      :modifiers="{
-        assetuid: image.uid,
-        auto: 'avif',
-        versionuid: getCSImageVersion(image),
-      }"
+      sizes="sm:100vw md:800px lg:1300px"
       loading="eager"
       fetchpriority="high"
       class="rounded-lg"
+      densities="x1"
     />
 
     <ImagePlaceholder

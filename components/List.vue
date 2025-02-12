@@ -111,23 +111,16 @@ defineProps({
           <div class="relative w-full h-full">
             <NuxtImg
               v-if="video.poster?.url"
-              provider="contentstack"
-              :src="video.poster.filename"
-              :quality="90"
+              provider="cloudinary"
+              :src="video.poster.url"
               width="90"
               height="160"
               fit="fill"
               :alt="video.title"
-              format="pjpg"
-              sizes="sm:400px"
-              :modifiers="{
-                assetuid: video.poster.uid,
-                auto: 'avif',
-                versionuid: getCSImageVersion(video.poster),
-              }"
+              sizes="sm:100vw md:300px lg:500px"
               loading="lazy"
-              fetchpriority="auto"
               class="rounded-lg w-full block"
+              densities="x1"
             />
           </div>
         </template>
