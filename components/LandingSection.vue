@@ -89,7 +89,7 @@ const computedFeatures = computed(() => {
       height="700"
       fit="fill"
       alt="The Doorbell DevRel"
-      sizes="sm:100vw md:300px lg:500px"
+      sizes="400px"
       loading="lazy"
       class="rounded-lg"
       densities="x1"
