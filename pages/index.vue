@@ -14,6 +14,17 @@ const { data: page } = await useGetPage({
   replaceHtmlCslp: true,
 });
 
+useHead({
+  script: [
+    {
+      type: "module",
+      defer: true,
+      src: "/youtube.js",
+      tagPosition: "bodyClose",
+    },
+  ],
+});
+
 useSeoMeta({
   description: page.value?.meta?.description,
   title: page.value?.meta.title,

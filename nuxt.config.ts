@@ -25,6 +25,12 @@ export default defineNuxtConfig({
     },
   },
 
+  vue: {
+    compilerOptions: {
+      isCustomElement: tag => ['lite-youtube'].includes(tag)
+    }
+  },
+
   features: {
     noScripts: false,
     inlineStyles: true,

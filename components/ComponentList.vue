@@ -6,6 +6,7 @@ import hero from "./Hero.vue";
 import grid from "./Grid.vue";
 import landing_section from "./LandingSection.vue";
 import list from "./List.vue";
+import video_player from "./VideoPlayerHome.vue";
 
 type Mapping = {
   [name: string]: Component;
@@ -16,6 +17,7 @@ const mapping: Mapping = {
   landing_section,
   grid,
   list,
+  video_player,
 };
 
 function getComponentForName(name: string) {

@@ -108,7 +108,7 @@ const computedlinks = computed(() => {
       width="1577"
       height="795"
       alt="The Doorbell DevRel"
-      sizes="400px md:800px lg:1200px"
+      sizes="sm:400px lg:1200px"
       loading="eager"
       fit="fill"
       fetchpriority="high"
