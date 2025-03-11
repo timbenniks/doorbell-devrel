@@ -36,7 +36,8 @@ async function create() {
 <template>
   <UMain class="max-w-xl mx-auto">
     <ULandingSection
-      title="Audience scripts"
+      title="Add your scripts"
+      description="Let's keep it civil shall we? 😂"
       :ui="{
         wrapper: 'py-12 sm:py-16',
       }"
