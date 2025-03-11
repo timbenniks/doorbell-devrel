@@ -41,6 +41,7 @@ const { text, isSupported, copy } = useClipboard();
   <UMain class="max-w-xl mx-auto">
     <ULandingSection
       title="Audience scripts"
+      description="https://dub.sh/doorbell"
       :ui="{
         wrapper: 'py-12 sm:py-16',
       }"
@@ -61,7 +62,7 @@ const { text, isSupported, copy } = useClipboard();
           )}`"
           :description="message.message"
           :ui="{
-            title: 'font-normal',
+            title: 'text-gray-900 dark:gray-400 text-sm font-normal',
             description:
               'font-bold text-[24px] text-gray-500 dark:text-white mt-1',
           }"
@@ -85,7 +86,7 @@ const { text, isSupported, copy } = useClipboard();
           )}`"
           :description="entry.message"
           :ui="{
-            title: 'font-normal',
+            title: 'text-gray-900 dark:text-gray-400 text-xs font-normal',
             description:
               'font-bold text-[24px] text-gray-500 dark:text-white mt-1',
           }"
